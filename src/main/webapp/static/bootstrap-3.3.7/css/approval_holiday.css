@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+/* approval_holiday @ approval_holiday.jsp */
+
+.col-md-padding {
+	padding: 0 9px;
+}
+
+.panel-notation{
+	height: 243px;
+	overflow: auto;
+}
