@@ -44,18 +44,9 @@
 			}
 		})
 	}
-	function startApply(ele) {
-		var id = $(ele).attr("data-id");
-		$.ajax({
-			url:"${APP_PATH}/admin/leave/startApply",
-			data:{
-				"id":id,
-			},
-			type:"post",
-			success:function(result){
-				console.log(result);
-			}
-		})
+	function redirectPage(ele) {
+		var taskId = $(ele).attr("data-taskId");
+		window.location.href='${APP_PATH}/admin/leave/getLeaveByTaskId?taskId='+taskId;
 	}
 	function showView(ele) {
 		var taskId = $(ele).attr("data-taskId");
@@ -147,7 +138,7 @@
 										<fmt:formatDate value="${task.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-											<button onclick="startApply(this);" class="btn btn-sm btn-info" data-id="${leave.id}" data-toggle="modal" data-target="#showHistoryComment">办理任务</button>
+											<button onclick="redirectPage(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">办理任务</button>
 											<button onclick="showView(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">查看当前流程图</button>
 									</td>
 								</tr>

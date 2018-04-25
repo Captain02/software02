@@ -1,7 +1,5 @@
 package com.java.activiti.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import java.util.Collections;
 import java.util.List;
 
@@ -15,6 +13,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.form.TaskFormData;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
@@ -24,7 +23,6 @@ import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -74,44 +72,16 @@ public class TaskController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ResponseBody
 	@RequestMapping("/listHistoryCommentWithProcessInstanceId")
-	public String listHistoryCommentWithProcessInstanceId(HttpServletResponse response, String processInstanceId)
+	public Msg listHistoryCommentWithProcessInstanceId(HttpServletResponse response, String processInstanceId)
 			throws Exception {
-		// if (processInstanceId == null) {
-		// return null;
-		// }
-		// List<Comment> commentList = taskService
-		// .getProcessInstanceComments(processInstanceId);
-		// // 改变顺序，按原顺序的反向顺序返回list
-		// Collections.reverse(commentList); //集合元素反转
-		// JsonConfig jsonConfig = new JsonConfig();
-		// jsonConfig.registerJsonValueProcessor(java.util.Date.class,
-		// //时间格式转换
-		// new DateJsonValueProcessor("yyyy-MM-dd hh:mm:ss"));
-		// JSONObject result = new JSONObject();
-		// JSONArray jsonArray = JSONArray.fromObject(commentList, jsonConfig);
-		// result.put("rows", jsonArray);
-		// ResponseUtil.write(response, result);
-		return null;
-	}
-
-	/**
-	 * 重定向审核处理页面
-	 * 
-	 * @param taskId
-	 * @param response
-	 * @return
-	 * @throws Exception
-	 */
-	@RequestMapping("/redirectPage")
-	public String redirectPage(String taskId, HttpServletResponse response) throws Exception {
-		// TaskFormData formData=formService.getTaskFormData(taskId);
-		// String url=formData.getFormKey();
-		// System.out.println("*********************"+url);
-		// JSONObject result=new JSONObject();
-		// result.put("url", url);
-		// ResponseUtil.write(response, result);
-		return null;
+		List<Comment> commentList = null;
+		commentList = taskService.getProcessInstanceComments(processInstanceId);
+		// 集合元素反转
+		Collections.reverse(commentList);
+		System.out.println(commentList);
+		return Msg.success().add("commens", commentList);
 	}
 
 	/**
@@ -129,18 +99,15 @@ public class TaskController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping(value="/taskPage",method=RequestMethod.GET)
-	public String taskPage(HttpServletRequest request,@RequestParam(value="pn",defaultValue="1")Integer pn,
-			@RequestParam(value="name",required=false)String name,Model model)
-			throws Exception {
+	@RequestMapping(value = "/taskPage", method = RequestMethod.GET)
+	public String taskPage(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "name", required = false) String name, Model model) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 		System.out.println(userId);
 		PageInfo<Task> pageInfo = null;
-		PageHelper.startPage(pn,8);
-		List<Task> list = taskService.createTaskQuery()
-				.taskCandidateUser(userId)
-				.list();
-		pageInfo = new PageInfo<>(list,5);
+		PageHelper.startPage(pn, 8);
+		List<Task> list = taskService.createTaskQuery().taskCandidateUser(userId).list();
+		pageInfo = new PageInfo<>(list, 5);
 		System.out.println(list);
 		model.addAttribute("pageInfo", pageInfo);
 		return "agencyTask";
@@ -151,8 +118,8 @@ public class TaskController {
 	 * 
 	 * @return
 	 */
-	@RequestMapping(value="/showCurrentView",method=RequestMethod.GET)
-	public ModelAndView showCurrentView(HttpServletResponse response, @RequestParam(value="taskId")String taskId) {
+	@RequestMapping(value = "/showCurrentView", method = RequestMethod.GET)
+	public ModelAndView showCurrentView(HttpServletResponse response, @RequestParam(value = "taskId") String taskId) {
 		// 视图
 		ModelAndView mav = new ModelAndView();
 
@@ -197,21 +164,18 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value="/listHistoryComment",method=RequestMethod.GET)
+	@RequestMapping(value = "/listHistoryComment", method = RequestMethod.GET)
 	public Msg listHistoryComment(HttpServletResponse response,
-			@RequestParam(value = "processInstanceId") String processInstanceId) throws Exception {
-//		if (processInstanceId == null) {
-//			processInstanceId = "";
-//		}
-//		HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
-		List<Comment> commentList = null;
-		//if (hti != null) {
-			commentList = taskService.getProcessInstanceComments(processInstanceId);
-			// 集合元素反转
-			Collections.reverse(commentList);
-		//}
-		System.out.println(commentList);
-		return Msg.success().add("commens", commentList);
+			@RequestParam(value = "taskId") String taskId) throws Exception {
+		List<Comment> comments = null;
+		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery()
+			.taskId(taskId)
+			.singleResult();
+		if (taskInstance!=null) {
+			comments = taskService.getProcessInstanceComments(taskInstance.getProcessInstanceId());
+			Collections.reverse(comments);
+		}
+		return Msg.success().add("commens", comments);
 	}
 
 	/**
@@ -299,50 +263,20 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/finishedList")
-	public String finishedList(HttpServletResponse response, String rows, String page, String s_name, String groupId)
-			throws Exception {
-		// 为什么要这样呢？因为程序首次运行进入后台时，
-		// s_name必定是等于null的，如果直接这样填写进查询语句中就会出现 % null %这样就会导致查询结果有误
-		// if(s_name==null){
-		// s_name="";
-		// }
-		// PageInfo pageInfo=new PageInfo();
-		// Integer pageSize=Integer.parseInt(rows);
-		// pageInfo.setPageSize(pageSize);
-		// if(page==null||page.equals("")){
-		// page="1";
-		// }
-		// pageInfo.setPageIndex((Integer.parseInt(page)-1)*pageSize);
-		// //创建流程历史实例查询
-		// List<HistoricTaskInstance>
-		// histList=historyService.createHistoricTaskInstanceQuery()
-		// .taskCandidateGroup(groupId)//根据角色名称查询
-		// .taskNameLike("%"+s_name+"%")
-		// .listPage(pageInfo.getPageIndex(), pageInfo.getPageSize());
-		//
-		// long histCount=historyService.createHistoricTaskInstanceQuery()
-		// .taskCandidateGroup(groupId)
-		// .taskNameLike("%"+s_name+"%")
-		// .count();
-		// List<MyTask> taskList=new ArrayList<MyTask>();
-		// //这里递出没有用的字段，免得给前端页面做成加载压力
-		// for(HistoricTaskInstance hti:histList){
-		// MyTask myTask=new MyTask();
-		// myTask.setId(hti.getId());
-		// myTask.setName(hti.getName());
-		// myTask.setCreateTime(hti.getCreateTime());
-		// myTask.setEndTime(hti.getEndTime());
-		// taskList.add(myTask);
-		// }
-		// JsonConfig jsonConfig=new JsonConfig();
-		// jsonConfig.registerJsonValueProcessor(java.util.Date.class, new
-		// DateJsonValueProcessor("yyyy-MM-dd hh:mm:ss"));
-		// JSONObject result=new JSONObject();
-		// JSONArray jsonArray=JSONArray.fromObject(taskList,jsonConfig);
-		// result.put("rows", jsonArray);
-		// result.put("total",histCount );
-		// ResponseUtil.write(response, result);
-		return null;
+	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request,
+			String rows, String page, String s_name, String groupId, Model model) throws Exception {
+		String userId = (String) request.getSession().getAttribute("userId");
+		PageInfo<HistoricTaskInstance> pageInfo = null;
+		PageHelper.startPage(pn, 8);
+		// 创建流程历史实例查询
+		List<HistoricTaskInstance> histList = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId)
+				.list();
+		pageInfo = new PageInfo<>(histList, 5);
+		
+		
+		model.addAttribute("pageInfo", pageInfo);
+
+		return "finishedTask";
 	}
 
 	/**
