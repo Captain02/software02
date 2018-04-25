@@ -1,5 +1,6 @@
 package com.java.activiti.controller;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,7 +71,7 @@ public class LeaveController {
 		model.addAttribute("pn", pn);
 		model.addAttribute("pageInfo", pageInfo);
 		
-		return "requestHoliday";
+		return "requestTask";
 	}
 
 	/**
@@ -134,7 +137,14 @@ public class LeaveController {
 		// 先根据流程ID查询
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		Leave leave = leaveService.getLeaveByTaskId(task.getProcessInstanceId());
+		
+		List<Comment> comments = null;
+		if (task.getProcessInstanceId() != null) {
+			comments = taskService.getProcessInstanceComments(task.getProcessInstanceId());
+			Collections.reverse(comments);
+		}
 		model.addAttribute("leave", leave);
-		return null;
+		model.addAttribute("comments", comments);
+		return "approvalLeave";
 	}
 }

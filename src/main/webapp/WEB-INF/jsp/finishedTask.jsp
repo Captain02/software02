@@ -34,24 +34,7 @@
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
 <script type="text/javascript">
-	function save(){
-		$.ajax({
-			url:"${APP_PATH}/admin/leave/save",
-			data:$("#leaveForm").serialize(),
-			type:"post",
-			success:function(result){
-				console.log(result);
-			}
-		})
-	}
-	function redirectPage(ele) {
-		var taskId = $(ele).attr("data-taskId");
-		window.location.href='${APP_PATH}/admin/leave/getLeaveByTaskId?taskId='+taskId;
-	}
-	function showView(ele) {
-		var taskId = $(ele).attr("data-taskId");
-		window.location.href='${APP_PATH}/admin/task/showCurrentView?taskId='+taskId;
-	}
+
 </script>
 </head>
 
@@ -94,6 +77,7 @@
 	  </div><!-- /.container-fluid -->
 	</nav>
 	
+				
 			<div class="wrapper">
 						<div class="row">
 						<div class="col-md-2 left-slide">
@@ -123,23 +107,28 @@
 									<th>任务ID</th>
 									<th>任务名称</th>
 									<th>创建时间</th>
+									<th>结束时间</th>
 									<th>操作</th>
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach items="${pageInfo.list}" var="task">
+							<c:forEach items="${pageInfo.list}" var="historicTaskInstance">
 								<tr>
 									<td> <label>
-									      <input type="checkbox" class="selectItem">
+									      <input type="checkbox" class="selectItem查看历史批注">
 									    </label></td>
-									<td>${task.id}</td>
-									<td>${task.name}</td>
+									<td>${historicTaskInstance.id}</td>
+									<td>${historicTaskInstance.name}</td>
 									<td>
-										<fmt:formatDate value="${task.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
+										<fmt:formatDate value="${historicTaskInstance.startTime}" pattern="yyyy-mm-dd hh:dd:ss" />
+									</td>
+																		<td>
+										<fmt:formatDate value="${historicTaskInstance.endTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-											<button onclick="redirectPage(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">办理任务</button>
-											<button onclick="showView(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">查看当前流程图</button>
+											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">流程执行过程</button>
+											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">历史批注</button>
+											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">查看历史批注</button>
 									</td>
 								</tr>
 							</c:forEach>
@@ -155,5 +144,78 @@
 					</div>
 			
 			<footer>底部信息</footer>
+			
+			<!-- 新建请假单 -->
+			<div class="modal" id="addHolidayNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">新建请假单</h4>
+			      </div>
+					<form id="leaveForm" action="${APP_PATH}/admin/leave/save" method="post">
+			      <div class="modal-body">
+					  <div class="form-group clearfix">
+					    <label class="col-md-2" for="day">请假天数</label>
+					    <div class="col-md-10">
+					    	<input type="number" class="form-control" id="day" name="leaveDays" placeholder="请假天数">
+					    </div>
+					  </div>
+					  <div class="form-group clearfix">
+					    <label class="col-md-2" for="reason">请假原因</label>
+					    <div class="col-md-10">
+					    	<textarea class="form-control" id="reason" name="leaveReason"></textarea>
+					    </div>
+					  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
+			        <button type="button" onclick="save()" class="btn btn-info btn-sm">提交</button>
+			      </div>
+					</form>
+			    </div>
+			  </div>
+			</div>
+			
+			<!-- 查看历史批注 -->
+			<div class="modal" id="showHistoryComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">查看历史批注</h4>
+			      </div>
+			      <div class="modal-body">
+			        <div class="panel panel-default">
+			        	<div class="panel-heading" role="tab" id="headingTwo">
+			        		<h4 class="panel-title">批注列表</h4>
+			        	</div>
+			        	
+			        	<div class="panel-body">
+			        		<table class="table table-striped table-condensed">
+							<thead>
+								<tr>
+									<th>批注时间</th>
+									<th>批注人</th>
+									<th>批注信息</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>1</td>
+									<td>1</td>
+								</tr>
+							</tbody>
+						</table>
+					  
+			        	</div>
+						
+			        </div>
+			      </div>
+			    </div>
+			  </div>
+			</div>
+			
 </body>
 </html>

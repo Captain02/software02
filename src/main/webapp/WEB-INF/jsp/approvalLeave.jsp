@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -71,8 +73,8 @@
 	          </ul>
 	        </li>
 	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div><
 	</nav>
 	
 			<div class="wrapper">
@@ -94,7 +96,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">请假人:</label>
 													<div class="col-md-11">
-														<input class="form-control" type="text" name="userName">
+														<input class="form-control" type="text" name="userName" value="${leave.user.firstName}${leave.user.lastName}" />
 													</div>
 												</div>
 											</div>
@@ -105,7 +107,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">请假天数:</label>
 													<div class="col-md-11">
-														<input class="form-control" type="text" name="days">
+														<input class="form-control" type="text" name="days" value="${leave.leaveDays}" />
 													</div>
 												</div>
 											</div>
@@ -116,7 +118,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">请假原因:</label>
 													<div class="col-md-11">
-														<textarea rows="" cols="" class="form-control"></textarea>
+														<textarea rows="" cols="" class="form-control">${leave.leaveReason}</textarea>
 													</div>
 												</div>
 											</div>
@@ -146,26 +148,15 @@
 									  	</tr>
 									  </thead>
 									  <tbody>
-									  	<tr>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  	</tr>
-									  	<tr>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  	</tr>
-									  	<tr>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  	</tr>
-									  		<tr>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  	</tr>
+									  <c:forEach items="${comments}" var="comment">
+										  	<tr>
+										  		<td>
+													<fmt:formatDate value="${comment.time}" pattern="yyyy-mm-dd hh:dd:ss" />
+												</td>
+										  		<td>${comment.userId}</td>
+										  		<td>${comment.fullMessage}</td>
+										  	</tr>
+									  </c:forEach>
 									  </tbody>
 									</table>
 								</div>

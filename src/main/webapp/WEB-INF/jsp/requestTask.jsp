@@ -60,7 +60,7 @@
 	function listComment(ele) {
 		var processInstanceId = $(ele).attr("data-prcessInstanceId");
 		$.ajax({
-			url:"${APP_PATH}/admin/task/listHistoryComment",
+			url:"${APP_PATH}/admin/task/listHistoryCommentWithProcessInstanceId",
 			data:{
 				"processInstanceId":processInstanceId
 			},
