@@ -86,18 +86,47 @@
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									部署管理
-									<div class="seracher-form clearfix" style="display: inline-block; width: 30%; margin-left: 15px;">
-										
-										
-									</div>
+									<form action="" method="post" style="display: inline-block; margin-left: 15px;">
+										<div class="form-group" style=" margin-bottom: 0;">
+											<input type="text" name="name"/>
+											<input type="submit" value="搜索" />
+										</div>
+									</form>
 									
-									<div class="pull-right">
-										<a href=""><i class="glyphicon glyphicon-plus" style="color: #5cb85c;"></i>添加</a>
+									<div class="pull-right" style="margin-top: 2px;">
+										<a href="" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus" style="color: #5cb85c;"></i>添加</a>
 										<a href="" style="display: inline-block; margin: 0 15px;">|</a>
 										<a href=""><i class="glyphicon glyphicon-minus" style="color: #ac2925"></i>删除</a>
 									</div>
 								</div>
-								<div class="panel-body"></div>
+								<div class="panel-body">
+									<table class="table table-bordered table-hover">
+									  <thead>
+									  	<tr>
+									  		<th>
+											    <label>
+											      <input type="checkbox">
+											    </label>
+										    </th>
+									  		<th>编号</th>
+									  		<th>流程名称</th>
+									  		<th>部署时间</th>
+									  	</tr>
+									  </thead>
+									  <tbody>
+									  	<tr>
+									  		<td>
+									  			<label>
+											      <input type="checkbox">
+											    </label>
+									  		</td>
+									  		<td>1</td>
+									  		<td>1</td>
+									  		<td>1</td>
+									  	</tr>
+									  </tbody>
+									</table>
+								</div>
 							</div>
 							
 						</div>
@@ -106,7 +135,26 @@
 		    </div>
 			
 			
-			
+			<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">添加流程部署</h4>
+			      </div>
+			      <div class="modal-body">
+			       <div class="form-group">
+				    <input type="file" id="exampleInputFile">
+				    <p class="help-block"></p>
+				  </div>
+			      </div>
+			      <div class="modal-footer">
+			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			        <button type="button" class="btn btn-primary">上传</button>
+			      </div>
+			    </div>
+			  </div>
+		</div>
 			
 </body>
 </html>
