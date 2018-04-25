@@ -1,0 +1,73 @@
+@charset "UTF-8";
+
+html, body {
+	height: 100%;
+}
+
+body {
+	background-color: #f5f5f5;
+}
+
+table thead tr th, table tbody tr td {
+	text-align: center;
+	vertical-align: middle !important;
+}
+
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+	margin: 0;
+}
+
+ul, ol {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+label{
+	margin-bottom: 0;
+}
+input[type="checkbox"]:hover{
+	cursor: pointer;
+}
+a {
+	color: #333;
+}
+
+a:focus, a:hover {
+	color: #333;
+}
+
+a:hover {
+	cursor: pointer;
+	text-decoration: none;
+}
+
+i.glyphicon {
+	margin-right: 5px;
+}
+
+.wrapper {
+	margin-right: 15px;
+}
+
+footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	padding: 5px;
+	border-top: 1px solid #ddd;
+	background: #fff;
+	border-top: 1px solid #ddd;
+	text-align: center;
+}
+a.oprate{
+	color:#0000a0;
+	text-decoration: underline;
+}
+.form-group label{
+	padding-top: 7px;
+	font-weight: normal;
+}
+.modal-dialog{
+	overflow: auto;
+}

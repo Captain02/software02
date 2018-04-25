@@ -1,0 +1,15 @@
+@charset "UTF-8";
+
+/*main @ main.jsp*/
+.nav-main{
+	margin-bottom: 0;
+}
+.left-slide div.panel-group{
+	margin-bottom: 0;
+}
+.left-slide div.panel-group ul li{
+	padding: 10px;
+}
+.left-slide div.panel-group ul li:hover{
+	background-color: #e7e7e7;
+}
