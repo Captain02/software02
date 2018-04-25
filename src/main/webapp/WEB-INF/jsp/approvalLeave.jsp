@@ -134,10 +134,24 @@
 												</div>
 											</div>
 										</div>
+										
+										<div class="form-group">
+											<div class="row">
+												<div class="col-md-12">
+													<label for="" class="col-md-1">操作:</label>
+													<div class="col-md-11">
+														<button class="btn btn-success btn-sm agree-btn">同意</button>
+														<button class="btn btn-danger btn-sm disagree-btn">驳回</button>
+													</div>
+												</div>
+											</div>
+										</div>
 								</div>
 							</div>
 							<div class="panel panel-default panel-notation">
-								<div class="panel-heading">批注列表</div>
+								<div class="panel-heading">
+									批注列表
+								</div>
 								<div class="panel-body">
 									<table class="table table-bordered">
 									  <thead>
