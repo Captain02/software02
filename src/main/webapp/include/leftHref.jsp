@@ -27,30 +27,7 @@
 						
 					</div>
 					
-					<div class="panel-group" id="systemSetting" role="tablist"
-						aria-multiselectable="true">
-						<div class="panel panel-default">
-							<div class="panel-heading" role="tab" id="headingTwo">
-								<h4 class="panel-title">
-									<a role="button" data-toggle="collapse"
-										data-parent="#systemSetting" href="#collapseTwo"
-										aria-expanded="true" aria-controls="collapseOne">
-										系统设置<i class="glyphicon glyphicon-chevron-down pull-right"></i></a>
-								</h4>
-							</div>
-							<div id="collapseTwo" class="panel-collapse collapse"
-								role="tabpanel" aria-labelledby="headingTwo">
-								<div class="panel-body">
-									<ul>
-										<li><a><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
-										<li><a href="${APP_PATH}/admin/deploy/deployPage"><i class="glyphicon glyphicon-edit"></i>流程部署管理</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					
-					<div class="panel-group" id="systemSetting" role="tablist"
+						<div class="panel-group" id="systemSetting" role="tablist"
 						aria-multiselectable="true">
 						<div class="panel panel-default">
 							<div class="panel-heading" role="tab" id="headingTwo">
@@ -61,7 +38,7 @@
 										流程管理<i class="glyphicon glyphicon-chevron-down pull-right"></i></a>
 								</h4>
 							</div>
-							<div id="collapseTwo" class="panel-collapse collapse"
+							<div id="collapseTwo" class="panel-collapse collapse in"
 								role="tabpanel" aria-labelledby="headingTwo">
 								<div class="panel-body">
 									<ul>
@@ -71,3 +48,28 @@
 							</div>
 						</div>
 					</div>
+					
+					
+					<div class="panel-group" id="systemSetting" role="tablist"
+						aria-multiselectable="true">
+						<div class="panel panel-default">
+							<div class="panel-heading" role="tab" id="headingThree">
+								<h4 class="panel-title">
+									<a role="button" data-toggle="collapse"
+										data-parent="#systemSetting" href="#collapseThree"
+										aria-expanded="true" aria-controls="collapseOne">
+										系统设置<i class="glyphicon glyphicon-chevron-down pull-right"></i></a>
+								</h4>
+							</div>
+							<div id="collapseThree" class="panel-collapse collapse in"
+								role="tabpanel" aria-labelledby="headingThree">
+								<div class="panel-body">
+									<ul>
+										<li><a><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+				

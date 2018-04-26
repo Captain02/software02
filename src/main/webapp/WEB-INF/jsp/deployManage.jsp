@@ -29,14 +29,34 @@
 <!-- Bootstrap core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/jquery.min.js"></script>
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="${APP_PATH}/static/bootstrap-3.3.7/js/script.js"></script>
 
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
 
 <script type="text/javascript">
-	function dele(ele) {
-		var ids = "";
+function dele(ele){
+	var ids = "";
+	var pushArray = [];
+	var ifHavechecked = $('tbody tr td input[type="checkbox"]:checked');
+	if(ifHavechecked.length == 0){
+		alert('请至少选择一行');
 	}
+	
+	else{
+		for(var i = 0; i<ifHavechecked.length; i++){
+			pushArray.push($(ifHavechecked[i]).parent().parent().next().html());
+		}
+		
+		ids = pushArray.join('-');
+        $(ele).attr('data-id',ids);
+	}
+	
+	if(confirm('确定要删除所选流程吗？')){
+		//ajax
+		alert($(ele).attr('data-id'));
+	}
+}
 </script>
 </head>
 
@@ -111,7 +131,7 @@
 									  	<tr>
 									  		<th>
 											    <label>
-											      <input type="checkbox">
+											      <input type="checkbox" id="selectAll">
 											    </label>
 										    </th>
 									  		<th>编号</th>
@@ -124,7 +144,7 @@
 										  	<tr>
 										  		<td>
 										  			<label>
-												      <input type="checkbox">
+												      <input type="checkbox" name="selectItem">
 												    </label>
 										  		</td>
 										  		<td>${deployment.id}</td>
@@ -137,6 +157,29 @@
 									  </tbody>
 									</table>
 								</div>
+								
+						<!-- 分页  start -->
+						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
+						  <ul class="pagination ">
+						    <li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    <li class="active"><a href="#">1</a></li>
+						    <li><a href="#">2</a></li>
+						    <li><a href="#">3</a></li>
+						    <li><a href="#">4</a></li>
+						    <li><a href="#">5</a></li>
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
+						<!-- 分页 end -->
+						
 							</div>
 							
 						</div>

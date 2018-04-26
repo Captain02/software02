@@ -170,6 +170,7 @@
 											</div>
 										</div>
 								</div>
+								
 							</div>
 							<div class="panel panel-default panel-notation">
 								<div class="panel-heading">

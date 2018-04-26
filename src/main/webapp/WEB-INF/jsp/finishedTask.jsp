@@ -119,11 +119,7 @@
 				</div>
 				<div class="col-md-10">
 					<div class="panel panel-default">
-					  <div class="panel-heading">请假申请  
-						  <a class="pull-right oprate" data-toggle="modal" data-target="#addHolidayNote">
-						  	<i class="glyphicon glyphicon-plus"></i>
-						  	新增请假单
-						  </a>
+					  <div class="panel-heading">已办任务管理
 					  </div>
 					  <div class="panel-body">
 					   	<table class="table table-striped">
@@ -132,7 +128,7 @@
 									<th> 
 										
 									    <label>
-									      <input type="checkbox" class="selectAll">
+									      <input type="checkbox" id="selectAll">
 									    </label>
   									</th>
 									<th>任务ID</th>
@@ -146,7 +142,7 @@
 							<c:forEach items="${pageInfo.list}" var="historicTaskInstance">
 								<tr>
 									<td> <label>
-									      <input type="checkbox" class="selectItem查看历史批注">
+									      <input type="checkbox" name="selectItem">
 									    </label></td>
 									<td>${historicTaskInstance.id}</td>
 									<td>${historicTaskInstance.name}</td>
@@ -167,6 +163,7 @@
 						</table>
 					  
 					  </div>
+						
 					</div>
 
 				</div>
@@ -174,7 +171,7 @@
 			
 					</div>
 			
-			<footer>底部信息</footer>
+			
 			
 			<!-- 新建请假单 -->
 			<div class="modal" id="addHolidayNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

@@ -13,3 +13,10 @@
 .left-slide div.panel-group ul li:hover{
 	background-color: #e7e7e7;
 }
+.left-slide div.panel-group ul li.active{
+	background-color: #e7e7e7;
+}
+
+nav.navigation{
+	position: fixed;
+}

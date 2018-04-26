@@ -104,12 +104,7 @@
 				</div>
 				<div class="col-md-10">
 					<div class="panel panel-default">
-					  <div class="panel-heading">请假申请  
-						  <a class="pull-right oprate" data-toggle="modal" data-target="#addHolidayNote">
-						  	<i class="glyphicon glyphicon-plus"></i>
-						  	新增请假单
-						  </a>
-					  </div>
+					  <div class="panel-heading">代办任务管理</div>
 					  <div class="panel-body">
 					   	<table class="table table-striped">
 							<thead>
@@ -138,22 +133,50 @@
 										<fmt:formatDate value="${task.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-											<button onclick="redirectPage(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">办理任务</button>
-											<button onclick="showView(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">查看当前流程图</button>
+										<button onclick="redirectPage(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">办理任务</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-info" data-taskId="${task.id}">查看当前流程图</button>
 									</td>
 								</tr>
 							</c:forEach>
 							</tbody>
 						</table>
 					  
+					  
+					  
 					  </div>
+					  
+						<!-- 分页 start -->
+						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
+						  <ul class="pagination ">
+						    <li>
+						      <a href="#" aria-label="Previous">
+						        <span aria-hidden="true">&laquo;</span>
+						      </a>
+						    </li>
+						    <li class="active"><a href="#">1</a></li>
+						    <li><a href="#">2</a></li>
+						    <li><a href="#">3</a></li>
+						    <li><a href="#">4</a></li>
+						    <li><a href="#">5</a></li>
+						    <li>
+						      <a href="#" aria-label="Next">
+						        <span aria-hidden="true">&raquo;</span>
+						      </a>
+						    </li>
+						  </ul>
+						</nav>
+						<!-- 分页 end -->
+					
 					</div>
-
+					
+					
+					
+					
 				</div>
 					</div>
 			
 					</div>
 			
-			<footer>底部信息</footer>
+			
 </body>
 </html>
