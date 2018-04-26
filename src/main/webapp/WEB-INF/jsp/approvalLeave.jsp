@@ -36,7 +36,30 @@
 <!-- Page styles for this template -->
 <link href="${APP_PATH}/static/bootstrap-3.3.7/css/approval_holiday.css" rel="stylesheet">
 
+<script type="text/javascript">
+	function apply(ele) {
+		var isAgree = $(ele).attr("data-isAgree");
+		var taskId = $(ele).attr("data-taskId");
+		var days = $('#days').val();
+		var leaveRason = $('#leaveReason').val();
+		
+		$.ajax({
+			url:"${APP_PATH}/admin/task/applyLeave",
+			data:{
+				'state':isAgree,
+				'taskId':taskId,
+				'comment':leaveRason,
+				'leaveDays':days
+			},
+			type:"POST",
+			success:function(result){
+				console.log(result);
+			}
+		})
+	}
+</script>
 </head>
+
 
 <body>
 	<nav class="navbar navbar-default nav-main">
@@ -74,7 +97,7 @@
 	        </li>
 	      </ul>
 	    </div>
-	  </div><
+	  </div>
 	</nav>
 	
 			<div class="wrapper">
@@ -107,7 +130,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">请假天数:</label>
 													<div class="col-md-11">
-														<input class="form-control" type="text" name="days" value="${leave.leaveDays}" />
+														<input id="days" class="form-control" type="text" name="days" value="${leave.leaveDays}" />
 													</div>
 												</div>
 											</div>
@@ -118,7 +141,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">请假原因:</label>
 													<div class="col-md-11">
-														<textarea rows="" cols="" class="form-control">${leave.leaveReason}</textarea>
+														<textarea id="leaveReason" class="form-control">${leave.leaveReason}</textarea>
 													</div>
 												</div>
 											</div>
@@ -140,8 +163,8 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">操作:</label>
 													<div class="col-md-11">
-														<button class="btn btn-success btn-sm agree-btn">同意</button>
-														<button class="btn btn-danger btn-sm disagree-btn">驳回</button>
+														<button onclick="apply(this);" data-taskId="${taskId}" data-isAgree="1" class="btn btn-success btn-sm agree-btn">同意</button>
+														<button onclick="apply(this);" data-taskId="${taskId}" data-isAgree="0" class="btn btn-danger btn-sm disagree-btn">驳回</button>
 													</div>
 												</div>
 											</div>

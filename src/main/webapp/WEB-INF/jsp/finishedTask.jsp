@@ -34,7 +34,38 @@
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
 <script type="text/javascript">
-
+	function executionProcess(ele){
+		var taskId = $(ele).attr("data-taskId");
+		$.ajax({
+			url:"${APP_PATH}/admin/task/listAction",
+			data:{
+				'taskId':taskId
+			},
+			type:"GET",
+			success:function(result){
+				console.log(result);
+			}
+		})
+	}
+	
+	function listComment(ele) {
+		var processInstanceId = $(ele).attr("data-prcessInstanceId");
+		$.ajax({
+			url:"${APP_PATH}/admin/task/listHistoryCommentWithProcessInstanceId",
+			data:{
+				"processInstanceId":processInstanceId
+			},
+			type:"get",
+			success:function(result){
+				console.log(result);
+			}
+		})
+	}
+	
+	function showView(ele) {
+		var taskId = $(ele).attr("data-taskId");
+		window.location.href='${APP_PATH}/admin/task/showCurrentView?taskId='+taskId;
+	}
 </script>
 </head>
 
@@ -126,9 +157,9 @@
 										<fmt:formatDate value="${historicTaskInstance.endTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">流程执行过程</button>
-											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">历史批注</button>
-											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">查看历史批注</button>
+											<button onclick="executionProcess(this);" class="btn btn-sm btn-info" data-taskId="${historicTaskInstance.id }" data-toggle="modal" data-target="#showHistoryComment">流程执行过程</button>
+											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-taskId="${historicTaskInstance.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">历史批注</button>
+											<button onclick="showView(this);" class="btn btn-sm btn-info" data-taskId="${task.id}" data-toggle="modal" data-target="#showHistoryComment">查看流程图</button>
 									</td>
 								</tr>
 							</c:forEach>

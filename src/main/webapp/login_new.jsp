@@ -34,6 +34,7 @@
 				<option value="emp">员工</option>
 				<option value="zuz">组长</option>
 				<option value="zc">总裁</option>
+				<option value="jl">经理</option>
 			</select>
 			<div class="checkbox">
 			</div>

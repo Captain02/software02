@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -31,7 +33,11 @@
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
 
-
+<script type="text/javascript">
+	function dele(ele) {
+		var ids = "";
+	}
+</script>
 </head>
 
 <body>
@@ -96,7 +102,7 @@
 									<div class="pull-right" style="margin-top: 2px;">
 										<a href="" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus" style="color: #5cb85c;"></i>添加</a>
 										<a href="" style="display: inline-block; margin: 0 15px;">|</a>
-										<a href=""><i class="glyphicon glyphicon-minus" style="color: #ac2925"></i>删除</a>
+										<a onclick="dele(this);"><i class="glyphicon glyphicon-minus" style="color: #ac2925"></i>删除</a>
 									</div>
 								</div>
 								<div class="panel-body">
@@ -114,16 +120,20 @@
 									  	</tr>
 									  </thead>
 									  <tbody>
-									  	<tr>
-									  		<td>
-									  			<label>
-											      <input type="checkbox">
-											    </label>
-									  		</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  	</tr>
+									  <c:forEach items="${pageInfo.list}" var="deployment">
+										  	<tr>
+										  		<td>
+										  			<label>
+												      <input type="checkbox">
+												    </label>
+										  		</td>
+										  		<td>${deployment.id}</td>
+										  		<td>${deployment.name}</td>
+										  		<td>
+										  			<fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-mm-dd hh:dd:ss" />
+												</td>
+										  	</tr>
+									  </c:forEach>
 									  </tbody>
 									</table>
 								</div>
@@ -142,16 +152,18 @@
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">添加流程部署</h4>
 			      </div>
-			      <div class="modal-body">
-			       <div class="form-group">
-				    <input type="file" id="exampleInputFile">
-				    <p class="help-block"></p>
-				  </div>
-			      </div>
-			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-			        <button type="button" class="btn btn-primary">上传</button>
-			      </div>
+			      <form action="${APP_PATH}/admin/deploy/addDeploy" method="post" enctype="multipart/form-data">
+				      <div class="modal-body">
+				       <div class="form-group">
+						    <input type="file" id="exampleInputFile" name="file">
+						    <p class="help-block"></p>
+					  	 </div>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary">上传</button>
+				      </div>
+			      </form>
 			    </div>
 			  </div>
 		</div>

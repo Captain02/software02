@@ -1,11 +1,23 @@
 package com.java.activiti.controller;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
+import java.util.List;
+import java.util.zip.ZipInputStream;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 
 /**
  * 流程部署管理
@@ -13,7 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 @Controller
-@RequestMapping("/deploy")
+@RequestMapping("/admin/deploy")
 public class DeployController {
 		
 	//注入activitiService服务
@@ -29,56 +41,31 @@ public class DeployController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/deployPage")
-	public String deployPage(String rows,String page,String s_name,HttpServletResponse response) throws Exception{
-//		if(s_name==null){
-//			s_name="";
-//		}
-//		PageInfo pageInfo=new PageInfo();
-//		//填充每页显示数量
-//		Integer sizePage=Integer.parseInt(rows);
-//		pageInfo.setPageSize(sizePage);
-//		// 第几页
-//		String pageIndex = page;
-//		if (pageIndex == null || pageIndex == "") {
-//				pageIndex = "1";
-//		}
-//		pageInfo.setPageIndex((Integer.parseInt(pageIndex) - 1)
-//				* sizePage);
-//		//取得总数量
-//		long deployCount=repositoryService.createDeploymentQuery().deploymentNameLike("%"+s_name+"%")
-//				.count();
-//		
-//		List<Deployment> deployList=repositoryService.createDeploymentQuery()//创建流程查询实例
-//				.orderByDeploymenTime().desc()  //降序
-//				.deploymentNameLike("%"+s_name+"%")   //根据Name模糊查询
-//				.listPage(pageInfo.getPageIndex(), pageInfo.getPageSize());
-//		
-//		JsonConfig jsonConfig=new JsonConfig();
-//		jsonConfig.setExcludes(new String[]{"resources"});
-//		jsonConfig.registerJsonValueProcessor(java.util.Date.class, new DateJsonValueProcessor("yyyy-MM-dd hh:mm:ss"));
-//		JSONObject result=new JSONObject();
-//		JSONArray jsonArray=JSONArray.fromObject(deployList,jsonConfig);
-//		result.put("rows", jsonArray);
-//		result.put("total", deployCount);
-//		ResponseUtil.write(response, result);
-		return null;
+	@RequestMapping(value="/deployPage",method=RequestMethod.GET)
+	public String deployPage(@RequestParam(value="pn",defaultValue="1")Integer pn,Model model) throws Exception{
+		PageInfo<Deployment> pageInfo = null;
+		PageHelper.startPage(pn,8);
+		List<Deployment> list=repositoryService.createDeploymentQuery()//创建流程查询实例
+				.orderByDeploymenTime().desc()  //降序
+				.list();
+		pageInfo = new PageInfo<>(list,5);
+		
+		model.addAttribute("pageInfo", pageInfo);
+		return "deployManage";
 	}
 	/**
 	 * 添上传流程部署ZIP文件
 	 * @return
 	 * @throws Exception 
 	 */
-	@RequestMapping("/addDeploy")
-	public String addDeploy(HttpServletResponse response,MultipartFile deployFile) throws Exception{
-//		repositoryService.createDeployment() //创建部署
-//		.name(deployFile.getOriginalFilename())	//需要部署流程名称
-//		.addZipInputStream(new ZipInputStream(deployFile.getInputStream()))//添加ZIP输入流
-//		.deploy();//开始部署
-//		JSONObject result=new JSONObject();
-//		result.put("success", true);
-//		ResponseUtil.write(response, result);
-		return null;
+	@RequestMapping(value="/addDeploy",method = RequestMethod.POST)
+	public String addDeploy(MultipartFile file) throws Exception{
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++"+file.getOriginalFilename());
+		repositoryService.createDeployment() //创建部署
+		.name(file.getOriginalFilename())	//需要部署流程名称
+		.addZipInputStream(new ZipInputStream(file.getInputStream()))//添加ZIP输入流
+		.deploy();//开始部署
+		return "redirect:deployPage";
 	}
 
 	/**

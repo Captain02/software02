@@ -1,7 +1,9 @@
 package com.java.activiti.controller;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -10,17 +12,22 @@ import javax.servlet.http.HttpSession;
 
 import org.activiti.engine.FormService;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.form.TaskFormData;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
+import org.activiti.engine.impl.identity.Authentication;
 import org.activiti.engine.impl.persistence.entity.ProcessDefinitionEntity;
 import org.activiti.engine.impl.pvm.process.ActivityImpl;
 import org.activiti.engine.repository.ProcessDefinition;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +38,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.java.activiti.model.Leave;
+import com.java.activiti.model.MemberShip;
 import com.java.activiti.service.LeaveService;
 import com.java.activiti.util.Msg;
 
@@ -62,6 +71,9 @@ public class TaskController {
 
 	@Resource
 	private HistoryService historyService;
+
+	@Autowired
+	private IdentityService identityService;
 
 	/**
 	 * 查询历史流程批注
@@ -165,13 +177,12 @@ public class TaskController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/listHistoryComment", method = RequestMethod.GET)
-	public Msg listHistoryComment(HttpServletResponse response,
-			@RequestParam(value = "taskId") String taskId) throws Exception {
+	public Msg listHistoryComment(HttpServletResponse response, @RequestParam(value = "taskId") String taskId)
+			throws Exception {
 		List<Comment> comments = null;
-		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery()
-			.taskId(taskId)
-			.singleResult();
-		if (taskInstance!=null) {
+		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId)
+				.singleResult();
+		if (taskInstance != null) {
 			comments = taskService.getProcessInstanceComments(taskInstance.getProcessInstanceId());
 			Collections.reverse(comments);
 		}
@@ -194,61 +205,62 @@ public class TaskController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/audit_bz")
-	public String audit_bz(String taskId, Integer leaveDays, String comment, Integer state,
-			HttpServletResponse response, HttpSession session) throws Exception {
+	@ResponseBody
+	@RequestMapping(value = "/applyLeave", method = RequestMethod.POST)
+	public Msg applyLeave(@RequestParam("taskId") String taskId, @RequestParam("leaveDays") Integer leaveDays,
+			@RequestParam("comment") String comment, Integer state, HttpServletResponse response, HttpSession session)
+			throws Exception {
 		// 首先根据ID查询任务
-		// Task task=taskService.createTaskQuery() // 创建任务查询
-		// .taskId(taskId) // 根据任务id查询
-		// .singleResult();
-		// Map<String,Object> variables=new HashMap<String,Object>();
-		// //取得角色用户登入的session对象
-		// MemberShip currentMemberShip=(MemberShip)
-		// session.getAttribute("currentMemberShip");
-		// //取出用户，角色信息
-		// User currentUser=currentMemberShip.getUser();
-		// Group currentGroup=currentMemberShip.getGroup();
-		// if(currentGroup.getName().equals("总裁")||currentGroup.getName().equals("副总裁")){
-		// if(state==1){
-		// String leaveId=(String) taskService.getVariable(taskId, "leaveId");
-		// Leave leave=leaveService.findById(leaveId);
-		// leave.setState("审核通过");
-		// // 更新审核信息
-		// leaveService.updateLeave(leave);
-		// variables.put("msg", "通过");
-		// }else{
-		// String leaveId=(String) taskService.getVariable(taskId, "leaveId");
-		// Leave leave=leaveService.findById(leaveId);
-		// leave.setState("审核未通过");
-		// // 更新审核信息
-		// leaveService.updateLeave(leave);
-		// variables.put("msg", "未通过");
-		// }
-		// }
-		// if(state==1){
-		// variables.put("msg", "通过");
-		// }else{
-		// String leaveId=(String) taskService.getVariable(taskId, "leaveId");
-		// Leave leave=leaveService.findById(leaveId);
-		// leave.setState("审核未通过");
-		// // 更新审核信息
-		// leaveService.updateLeave(leave);
-		// variables.put("msg", "未通过");
-		// }
-		// // 设置流程变量
-		// variables.put("dasy", leaveDays);
-		// // 获取流程实例id
-		// String processInstanceId=task.getProcessInstanceId();
-		// // 设置用户id
-		// Authentication.setAuthenticatedUserId(currentUser.getFirstName()+currentUser.getLastName()+"["+currentGroup.getName()+"]");
-		// // 添加批注信息
-		// taskService.addComment(taskId, processInstanceId, comment);
-		// // 完成任务
-		// taskService.complete(taskId, variables);
-		// JSONObject result=new JSONObject();
-		// result.put("success", true);
-		// ResponseUtil.write(response, result);
-		return null;
+		Task task = taskService.createTaskQuery() // 创建任务查询
+				.taskId(taskId) // 根据任务id查询
+				.singleResult();
+		Map<String, Object> variables = new HashMap<String, Object>();
+
+		String groupId = (String) session.getAttribute("groupId");
+		String userId = (String) session.getAttribute("userId");
+		Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+
+		if (group.getName().equals("总裁") || group.getName().equals("副总裁")) {
+			if (state == 1) {
+				String leaveId = (String) taskService.getVariable(taskId, "leaveId");
+				Leave leave = leaveService.findById(leaveId);
+				leave.setState("通过");
+				// 更新审核信息
+				leaveService.updateLeave(leave);
+				variables.put("msg", "通过");
+			} else {
+				String leaveId = (String) taskService.getVariable(taskId, "leaveId");
+				Leave leave = leaveService.findById(leaveId);
+				leave.setState("未通过");
+				// 更新审核信息
+				leaveService.updateLeave(leave);
+				variables.put("msg", "未通过");
+			}
+
+		}
+		if (state == 1) {
+			variables.put("msg", "通过");
+		} else {
+			String leaveId = (String) taskService.getVariable(taskId, "leaveId");
+			Leave leave = leaveService.findById(leaveId);
+			leave.setState("审核未通过");
+			// 更新审核信息
+			leaveService.updateLeave(leave);
+			variables.put("msg", "未通过");
+		}
+		// 设置流程变量
+		variables.put("dasy", leaveDays);
+		// 获取流程实例id
+		String processInstanceId = task.getProcessInstanceId();
+
+		// 设置用户id
+		User user = identityService.createUserQuery().userId(userId).singleResult();
+		Authentication.setAuthenticatedUserId(user.getFirstName() + user.getLastName() + "[" + group.getName() + "]");
+		// 添加批注信息
+		taskService.addComment(taskId, processInstanceId, comment);
+		// 完成任务
+		taskService.complete(taskId, variables);
+		return Msg.success();
 	}
 
 	/**
@@ -263,17 +275,18 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/finishedList")
-	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request,
-			String rows, String page, String s_name, String groupId, Model model) throws Exception {
+	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request, Model model) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
+		String groupId = (String) request.getSession().getAttribute("groupId");
 		PageInfo<HistoricTaskInstance> pageInfo = null;
 		PageHelper.startPage(pn, 8);
 		// 创建流程历史实例查询
-		List<HistoricTaskInstance> histList = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId)
+		List<HistoricTaskInstance> histList = historyService.createHistoricTaskInstanceQuery()
+				.taskCandidateUser(userId)
+				.taskCandidateGroup(groupId)
 				.list();
 		pageInfo = new PageInfo<>(histList, 5);
-		
-		
+
 		model.addAttribute("pageInfo", pageInfo);
 
 		return "finishedTask";
@@ -287,20 +300,14 @@ public class TaskController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ResponseBody
 	@RequestMapping("/listAction")
-	public String listAction(String taskId, HttpServletResponse response) throws Exception {
-		// HistoricTaskInstance
-		// hti=historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
-		// String processInstanceId=hti.getProcessInstanceId(); // 获取流程实例id
-		// List<HistoricActivityInstance>
-		// haiList=historyService.createHistoricActivityInstanceQuery().processInstanceId(processInstanceId).list();
-		// JsonConfig jsonConfig=new JsonConfig();
-		// jsonConfig.registerJsonValueProcessor(java.util.Date.class, new
-		// DateJsonValueProcessor("yyyy-MM-dd hh:mm:ss"));
-		// JSONObject result=new JSONObject();
-		// JSONArray jsonArray=JSONArray.fromObject(haiList,jsonConfig);
-		// result.put("rows", jsonArray);
-		// ResponseUtil.write(response, result);
-		return null;
+	public Msg listAction(@RequestParam("taskId") String taskId,Model model) throws Exception {
+		HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+		String processInstanceId = hti.getProcessInstanceId(); // 获取流程实例id
+
+		List<HistoricActivityInstance> list = historyService.createHistoricActivityInstanceQuery()
+				.processInstanceId(processInstanceId).list();
+		return Msg.success().add("list", list);
 	}
 }

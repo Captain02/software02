@@ -143,6 +143,8 @@ public class LeaveController {
 			comments = taskService.getProcessInstanceComments(task.getProcessInstanceId());
 			Collections.reverse(comments);
 		}
+		
+		model.addAttribute("taskId", taskId);
 		model.addAttribute("leave", leave);
 		model.addAttribute("comments", comments);
 		return "approvalLeave";

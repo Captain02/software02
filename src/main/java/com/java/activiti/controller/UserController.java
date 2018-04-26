@@ -48,13 +48,10 @@ public class UserController {
 		map.put("userName", request.getParameter("userName"));
 		map.put("password", request.getParameter("password"));
 		map.put("groupId", request.getParameter("groupId"));
-		System.out.println(request.getParameter("userName"));
-		System.out.println(request.getParameter("password"));
-		System.out.println(request.getParameter("groupId"));
 		MemberShip memberShip=menberShipService.userLogin(map);
 		if (memberShip!=null) {
-			System.out.println("======================="+memberShip.getUserId());
 			request.getSession().setAttribute("userId", memberShip.getUserId());
+			request.getSession().setAttribute("groupId", request.getParameter("groupId"));
 			return "main";
 		}else {
 			return "redirect:/login_new.jsp";
