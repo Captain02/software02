@@ -224,10 +224,10 @@ public class TaskController {
 			if (state == 1) {
 				String leaveId = (String) taskService.getVariable(taskId, "leaveId");
 				Leave leave = leaveService.findById(leaveId);
-				leave.setState("通过");
+				leave.setState("已通过");
 				// 更新审核信息
 				leaveService.updateLeave(leave);
-				variables.put("msg", "通过");
+				variables.put("msg", "已通过");
 			} else {
 				String leaveId = (String) taskService.getVariable(taskId, "leaveId");
 				Leave leave = leaveService.findById(leaveId);
@@ -239,7 +239,7 @@ public class TaskController {
 
 		}
 		if (state == 1) {
-			variables.put("msg", "通过");
+			variables.put("msg", "已通过");
 		} else {
 			String leaveId = (String) taskService.getVariable(taskId, "leaveId");
 			Leave leave = leaveService.findById(leaveId);

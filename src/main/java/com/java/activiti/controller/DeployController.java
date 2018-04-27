@@ -14,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.java.activiti.util.Msg;
 
 /**
  * 流程部署管理
@@ -73,16 +75,14 @@ public class DeployController {
 	 * @return
 	 * @throws Exception 
 	 */
+	@ResponseBody
 	@RequestMapping("/delDeploy")
-	public String delDeploy(HttpServletResponse response,String ids) throws Exception{
+	public Msg delDeploy(HttpServletResponse response,String ids) throws Exception{
 //		//拆分字符串
-//		String[] idsStr=ids.split(",");
-//		for(String str:idsStr){
-//			repositoryService.deleteDeployment(str, true);
-//		}
-//		JSONObject result=new JSONObject();
-//		result.put("success", true);
-//		ResponseUtil.write(response, result);
-		return null;
+		String[] idsStr=ids.split("-");
+		for(String str:idsStr){
+			repositoryService.deleteDeployment(str, true);
+		}
+		return Msg.success();
 	}
 }

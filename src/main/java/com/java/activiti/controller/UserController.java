@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.java.activiti.model.MemberShip;
@@ -58,6 +59,15 @@ public class UserController {
 		}
 	}
 	
+	/*
+	 * 注销
+	 * */
+	@RequestMapping(value="logout",method=RequestMethod.GET)
+	public String logout() {
+		
+		return "redirect:/login_new.jsp";
+	}
+	
 	/**
 	 * 分页查询用户
 	 * @return
@@ -104,14 +114,7 @@ public class UserController {
 	 */
 	@RequestMapping("/updateUser")
 	public String updateUser(HttpServletResponse response,User uses) throws Exception{
-//		int result=userService.updateUser(uses);
-//		JSONObject json=new JSONObject();
-//		if(result>0){
-//			json.put("success", true);
-//		}else{
-//			json.put("success", false);
-//		}
-//		ResponseUtil.write(response, json);
+		userService.updateUser(uses);
 		return null;
 	}
 	/**

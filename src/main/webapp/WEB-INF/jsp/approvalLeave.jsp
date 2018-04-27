@@ -152,7 +152,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">批注:</label>
 													<div class="col-md-11">
-														<textarea rows="" cols="" class="form-control"></textarea>
+														<textarea id="leaveReason" rows="" cols="" class="form-control"></textarea>
 													</div>
 												</div>
 											</div>

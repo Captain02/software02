@@ -140,21 +140,23 @@ function dele(ele){
 									  	</tr>
 									  </thead>
 									  <tbody>
-									  	<tr>
-									  		<td>
-										  		<label>
-												      <input type="checkbox" name="selectItem">
-												</label>
-											</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td>1</td>
-									  		<td><a href="" style="color: blue; text-decoration: underline; font-size: 0.8em;">查看图片</a></td>
-									  	</tr>
+									  <c:forEach items="${pageInfo.list}" var="processDefnition">
+										  	<tr>
+										  		<td>
+											  		<label>
+													      <input type="checkbox" name="selectItem">
+													</label>
+												</td>
+										  		<td>${processDefnition.id}</td>
+										  		<td>${processDefnition.name}</td>
+										  		<td>${processDefnition.key}</td>
+										  		<td>${processDefnition.version}</td>
+										  		<td>${processDefnition.resourceName}</td>
+										  		<td>${processDefnition.diagramResourceName}</td>
+										  		<td>${processDefnition.deploymentId}</td>
+										  		<td><a href="${APP_PATH}/admin/processDefinition/showView?deploymentId=${processDefnition.deploymentId}&diagramResourceName=${processDefnition.diagramResourceName}" style="color: blue; text-decoration: underline; font-size: 0.8em;">查看图片</a></td>
+										  	</tr>
+									  </c:forEach>
 									  </tbody>
 									</table>
 								</div>

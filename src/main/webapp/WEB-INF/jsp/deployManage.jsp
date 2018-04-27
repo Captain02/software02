@@ -36,7 +36,6 @@
 
 <script type="text/javascript">
 function dele(ele){
-	var ids = "";
 	var pushArray = [];
 	var ifHavechecked = $('tbody tr td input[type="checkbox"]:checked');
 	if(ifHavechecked.length == 0){
@@ -53,8 +52,17 @@ function dele(ele){
 	}
 	
 	if(confirm('确定要删除所选流程吗？')){
-		//ajax
-		alert($(ele).attr('data-id'));
+		var ids = $(ele).attr('data-id');
+		$.ajax({
+			url:"${APP_PATH}/admin/deploy/delDeploy",
+			data:{
+				'ids':ids
+			},
+			type:"POST",
+			success:function(result){
+				window.location.href='${APP_PATH}/admin/deploy/deployPage';
+			}
+		})
 	}
 }
 </script>

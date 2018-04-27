@@ -40,7 +40,7 @@
 			data:$("#leaveForm").serialize(),
 			type:"post",
 			success:function(result){
-				console.log(result);
+				window.location.href='${APP_PATH}/admin/leave/list';
 			}
 		})
 	}
@@ -53,7 +53,7 @@
 			},
 			type:"post",
 			success:function(result){
-				console.log(result);
+				window.location.href='${APP_PATH}/admin/leave/list';
 			}
 		})
 	}
@@ -162,7 +162,7 @@
 									<td>${leave.state}</td>
 									<td>
 										<c:if test="${leave.state == '未提交'}">
-											<button onclick="startApply(this);" class="btn btn-sm btn-info" data-id="${leave.id}" data-toggle="modal" data-target="#showHistoryComment">提交申请</button>
+											<button onclick="startApply(this);" class="btn btn-sm btn-info" data-id="${leave.id}">提交申请</button>
 										</c:if>
 										<c:if test="${leave.state == '已通过' || leave.state == '未通过'}">
 											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${leave.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">查看历史批注</button>

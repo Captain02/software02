@@ -43,6 +43,7 @@
 								<div class="panel-body">
 									<ul>
 										<li><a href="${APP_PATH}/admin/deploy/deployPage"><i class="glyphicon glyphicon-edit"></i>流程部署管理</a></li>
+										<li><a href="${APP_PATH}/admin/processDefinition/processDefinitionPage"><i class="glyphicon glyphicon-edit"></i>流程定义管理</a></li>
 									</ul>
 								</div>
 							</div>
@@ -66,6 +67,7 @@
 								<div class="panel-body">
 									<ul>
 										<li><a><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
+										<li><a href="${APP_PATH}/admin/user/logout"><i class="glyphicon glyphicon-edit"></i>注销用户</a></li>
 									</ul>
 								</div>
 							</div>
