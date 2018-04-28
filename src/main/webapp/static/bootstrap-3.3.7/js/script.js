@@ -69,7 +69,18 @@ function addComment(result){
 	}
 }
 
-
+/**
+ * @userManage.jsp 编辑按钮填充用户信息
+ */
+function showUserInfo(ele){
+//	var userName = $(ele)
+//	var passWord
+//	var name
+//	var userEmail
+	
+	var userInfo = $(ele).parent.siblings('td.userInfo')
+	var showUserInfo = $('#editor-myModal > ')
+}
 
 
 

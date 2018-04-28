@@ -130,11 +130,9 @@ function dele(ele){
 									</form>
 									
 									<div class="pull-right" style="margin-top: 2px;">
-										<a href="" data-toggle="modal" data-target="#myModal"><i class="glyphicon glyphicon-plus" style="color: #5cb85c;"></i>添加</a>
+										<a href="" data-toggle="modal" data-target="#add-myModal"><i class="glyphicon glyphicon-plus" style="color: #5cb85c;"></i>添加</a>
 										<a href="" style="display: inline-block; margin: 0 15px;">|</a>
 										<a onclick="dele(this);"><i class="glyphicon glyphicon-minus" style="color: #ac2925"></i>删除</a>
-										<a href="" style="display: inline-block; margin: 0 15px;">|</a>
-										<a onclick=""><i class="glyphicon glyphicon-edit" style="color: #f0ad4e"></i>修改</a>
 									</div>
 								</div>
 								<div class="panel-body">
@@ -150,6 +148,7 @@ function dele(ele){
 									  		<th>密码</th>
 									  		<th>姓名</th>
 									  		<th>邮箱</th>
+									  		<th>操作</th>
 									  	</tr>
 									  </thead>
 									  <tbody>
@@ -160,10 +159,11 @@ function dele(ele){
 												      <input type="checkbox" name="selectItem">
 												    </label>
 										  		</td>
-										  		<td>${user.id}</td>
-										  		<td>${user.password}</td>
-										  		<td>${user.firstName}${user.lastName}</td>
-										  		<td>${user.email}</td>
+										  		<td class="userInfo">${user.id}</td>
+										  		<td class="userInfo">${user.password}</td>
+										  		<td class="userInfo">${user.firstName}${user.lastName}</td>
+										  		<td class="userInfo">${user.email}</td>
+										  		<td><a data-toggle="modal" data-target="#editor-myModal" onclick="showUserInfo(this)"><i class="glyphicon glyphicon-edit" style="color: #f0ad4e"></i>修改</a></td>
 										  	</tr>
 									  </c:forEach>
 									  </tbody>
@@ -221,8 +221,8 @@ function dele(ele){
 			
 		    </div>
 			
-			
-			<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<!--添加用户信息 -->
+			<div class="modal" id="add-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
@@ -268,6 +268,15 @@ function dele(ele){
 						    </div>
 					  	 </div>
 					  	 
+					  	  <div class="form-group clearfix">
+						    <label for="" class="col-md-2">组ID:</label>
+						    <div class="col-md-10">
+						    	<select class="form-control" name="group">
+						    		
+						    	</select>
+						    </div>
+					  	 </div>
+					  	 
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
@@ -277,6 +286,67 @@ function dele(ele){
 			    </div>
 			  </div>
 		</div>
+			
+			<!--编辑用户信息-->
+			<div class="modal" id="editor-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+			      </div>
+			      <form action="${APP_PATH}/admin/user/userSave" method="post">
+				      <div class="modal-body">
+				      
+				       <div class="form-group clearfix">
+						    <label for="" class="col-md-2">用户名:</label>
+						    <div class="col-md-10">
+						    	<input class="form-control" type="text" name="id" placeholder="输入用户名">
+						    </div>
+					  	 </div>
+					  	 
+					  	   <div class="form-group clearfix">
+						    <label for="" class="col-md-2">密码:</label>
+						    <div class="col-md-10">
+						    	<input class="form-control" type="text" name="password" placeholder="输入密码">
+						    </div>
+					  	 </div>
+					  	 
+					  	 
+					  	 <div class="form-group clearfix">
+						    <label for="" class="col-md-2">姓名:</label>
+						    <div class="col-md-10">
+						    	<input class="form-control" type="text" name="name" placeholder="输入姓名">
+						    </div>
+					  	 </div>
+					  	 					  	 
+					  	 <div class="form-group clearfix">
+						    <label for="" class="col-md-2">邮箱:</label>
+						    <div class="col-md-10">
+						    	<input class="form-control" type="text" name="email" placeholder="输入邮箱">
+						    </div>
+					  	 </div>
+					  	 
+					  	  <div class="form-group clearfix">
+						    <label for="" class="col-md-2">组ID:</label>
+						    <div class="col-md-10">
+						    	<select class="form-control" name="group">
+						    		
+						    	</select>
+						    </div>
+					  	 </div>
+					  	 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="submit" class="btn btn-primary js-add">添加</button>
+				      </div>
+			      </form>
+			    </div>
+			  </div>
+		</div>
+			
+			
 			
 </body>
 </html>
