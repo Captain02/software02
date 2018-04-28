@@ -105,8 +105,8 @@ function dele(ele){
 	          </ul>
 	        </li>
 	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div>
 	</nav>
 	
 			<div class="wrapper">
@@ -153,18 +153,17 @@ function dele(ele){
 									  	</tr>
 									  </thead>
 									  <tbody>
-									  <c:forEach items="${pageInfo.list}" var="deployment">
+									  <c:forEach items="${pageInfo.list}" var="user">
 										  	<tr>
 										  		<td>
 										  			<label>
 												      <input type="checkbox" name="selectItem">
 												    </label>
 										  		</td>
-										  		<td>${deployment.id}</td>
-										  		<td>${deployment.name}</td>
-										  		<td>
-										  			<fmt:formatDate value="${deployment.deploymentTime}" pattern="yyyy-mm-dd hh:dd:ss" />
-												</td>
+										  		<td>${user.id}</td>
+										  		<td>${user.password}</td>
+										  		<td>${user.firstName}${user.lastName}</td>
+										  		<td>${user.email}</td>
 										  	</tr>
 									  </c:forEach>
 									  </tbody>
@@ -173,24 +172,46 @@ function dele(ele){
 								
 						<!-- 分页  start -->
 						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
-						  <ul class="pagination ">
-						    <li>
-						      <a href="#" aria-label="Previous">
-						        <span aria-hidden="true">&laquo;</span>
-						      </a>
-						    </li>
-						    <li class="active"><a href="#">1</a></li>
-						    <li><a href="#">2</a></li>
-						    <li><a href="#">3</a></li>
-						    <li><a href="#">4</a></li>
-						    <li><a href="#">5</a></li>
-						    <li>
-						      <a href="#" aria-label="Next">
-						        <span aria-hidden="true">&raquo;</span>
-						      </a>
-						    </li>
-						  </ul>
-						</nav>
+							  <ul class="pagination ">
+							    <li>
+	                         <a href="${APP_PATH}/admin/user/userPage?pn=1">首页</a>
+	                     </li>
+	                     <c:if test="${pageInfo.hasPreviousPage}">
+	                         <li>
+	                             <a href="${APP_PATH}/admin/user/userPage?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+	                                 <span aria-hidden="true">&laquo;</span>
+	                             </a>
+	                         </li>
+	                     </c:if>
+	                     
+	                     <c:forEach items="${pageInfo.navigatepageNums}" var="pageNum">
+	                         <c:if test="${pageNum==pageInfo.pageNum}">
+	                             <li class="active">
+	                                 <a href="#">${pageNum}</a>
+	                             </li>
+	                         </c:if>
+	                         <c:if test="${pageNum!=pageInfo.pageNum}">
+	                             <li>
+	                                 <a href="${APP_PATH}/admin/user/userPage?pn=${pageNum}">${pageNum}</a>
+	                             </li>
+	                         </c:if>
+	                     </c:forEach>
+	
+	                     <c:if test="${pageInfo.hasNextPage }">
+	                         <li>
+	                             <a href="${APP_PATH}/admin/user/userPage?pn=${pageInfo.pageNum+1}" aria-label="Next">
+	                                 <span aria-hidden="true">&raquo;</span>
+	                             </a>
+	                         </li>
+	                     </c:if>
+	
+	                     <li>
+	                         <a href="${APP_PATH}/admin/user/userPage?pn=${pageInfo.pages}" aria-label="Next">
+	                             <span aria-hidden="true">末页</span>
+	                         </a>
+	                     </li>
+							  </ul>
+							</nav>
 						<!-- 分页 end -->
 						
 							</div>
@@ -208,13 +229,13 @@ function dele(ele){
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">添加用户信息</h4>
 			      </div>
-			      <form action="${APP_PATH}/admin/deploy/addDeploy" method="post" enctype="multipart/form-data">
+			      <form action="${APP_PATH}/admin/user/userSave" method="post">
 				      <div class="modal-body">
 				      
 				       <div class="form-group clearfix">
 						    <label for="" class="col-md-2">用户名:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="username" placeholder="输入用户名">
+						    	<input class="form-control" type="text" name="id" placeholder="输入用户名">
 						    </div>
 					  	 </div>
 					  	 
@@ -229,21 +250,21 @@ function dele(ele){
 					  	 <div class="form-group clearfix">
 						    <label for="" class="col-md-2">姓:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="firstname" placeholder="输入姓氏">
+						    	<input class="form-control" type="text" name="firstName" placeholder="输入姓氏">
 						    </div>
 					  	 </div>
 					  	 
 					  	 <div class="form-group clearfix">
 						    <label for="" class="col-md-2">名:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="lastname" placeholder="输入名字">
+						    	<input class="form-control" type="text" name="lastName" placeholder="输入名字">
 						    </div>
 					  	 </div>
 					  	 
 					  	 <div class="form-group clearfix">
 						    <label for="" class="col-md-2">邮箱:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="firstname" placeholder="输入邮箱">
+						    	<input class="form-control" type="text" name="email" placeholder="输入邮箱">
 						    </div>
 					  	 </div>
 					  	 

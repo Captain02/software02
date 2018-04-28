@@ -1,6 +1,4 @@
 package com.java.activiti.controller;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
-
 import java.util.List;
 import java.util.zip.ZipInputStream;
 
@@ -62,7 +60,6 @@ public class DeployController {
 	 */
 	@RequestMapping(value="/addDeploy",method = RequestMethod.POST)
 	public String addDeploy(MultipartFile file) throws Exception{
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++"+file.getOriginalFilename());
 		repositoryService.createDeployment() //创建部署
 		.name(file.getOriginalFilename())	//需要部署流程名称
 		.addZipInputStream(new ZipInputStream(file.getInputStream()))//添加ZIP输入流

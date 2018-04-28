@@ -14,11 +14,23 @@
 	request.setAttribute("APP_PATH", request.getContextPath());
 %>
 <!-- Bootstrap core CSS -->
+<script src="${APP_PATH}/static/bootstrap-3.3.7/js/jquery.min.js"></script>
 <link href="${APP_PATH}/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
 <link href="${APP_PATH}/static/bootstrap-3.3.7/css/login.css" rel="stylesheet">
-
+<script type="text/javascript">
+$(function() {
+	$.ajax({
+		url:"${APP_PATH}/admin/group/findGroup",
+		type:"GET",
+		data:"",
+		success:function(result){
+			console.log(result);
+		}
+	})
+})
+</script>
 </head>
 
 <body>

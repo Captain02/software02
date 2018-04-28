@@ -1,46 +1,47 @@
 package com.java.activiti.controller;
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.activiti.engine.IdentityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.activiti.model.Group;
 import com.java.activiti.model.User;
 import com.java.activiti.service.GroupService;
+import com.java.activiti.util.Msg;
 /**
  * 角色管理
  * @author Administrator
  *
  */
 @Controller
-@RequestMapping("/group")
+@RequestMapping("/admin/group")
 public class GroupController {
 		@Resource
 		private GroupService groupService;
+		@Autowired
+		IdentityService identityService;
 		/**
 		 * 填充角色下拉框
 		 * @param response
 		 * @return
 		 * @throws Exception
 		 */
-		@RequestMapping("/findGroup")
-		public String findGroup(HttpServletResponse response) throws Exception{
+		@ResponseBody
+		@RequestMapping(value="/findGroup",method=RequestMethod.GET)
+		public Msg findGroup(HttpServletResponse response,Model model) throws Exception{
+			List<org.activiti.engine.identity.Group> groups = identityService.createGroupQuery().list();
 //			List<Group> list=groupService.findGroup();
-//			
-//			JSONArray jsonArray=new JSONArray();
-//
-//			JSONObject jsonObject=new JSONObject();
-//			jsonObject.put("trueName", "请选择...");
-//			//转为JSON格式的数据
-//			jsonArray.add(jsonObject);
-//			//将list转为JSON
-//			JSONArray rows=JSONArray.fromObject(list);
-//			jsonArray.addAll(rows);
-//			ResponseUtil.write(response, jsonArray);
-			return null;
+			return Msg.success().add("groups", groups);
 		}
 		
 		/**
