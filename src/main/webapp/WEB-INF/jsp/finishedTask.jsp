@@ -30,6 +30,7 @@
 <!-- Bootstrap core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/jquery.min.js"></script>
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="${APP_PATH}/static/bootstrap-3.3.7/js/script.js"></script>
 
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
@@ -57,7 +58,7 @@
 			},
 			type:"get",
 			success:function(result){
-				console.log(result);
+				addComment(result);
 			}
 		})
 	}
@@ -259,7 +260,7 @@
 			        	</div>
 			        	
 			        	<div class="panel-body">
-			        		<table class="table table-striped table-condensed">
+			        		<table class="table table-striped table-condensed" id="js-historyComment">
 							<thead>
 								<tr>
 									<th>批注时间</th>
@@ -268,11 +269,7 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
+								
 							</tbody>
 						</table>
 					  

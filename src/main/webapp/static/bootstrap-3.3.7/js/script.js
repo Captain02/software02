@@ -31,7 +31,6 @@ $(function(){
  * @login_new.jsp  请求ajax,生成组别
  */
 function addGroup(result){
-	
 	for(var i = 0; i<result.extend.groups.length; i++){
 		var html = $($.parseHTML(" '<option value="+result.extend.groups[i].id+">"+result.extend.groups[i].name+"</option>' "));
 		
@@ -42,8 +41,32 @@ function addGroup(result){
 		}
 		
 	}
-	
-	
+
+}
+
+/**
+ * @yibanManage.jsp  请求ajax,生成历史批注
+ */
+function addComment(result){
+	for(var i = 0; i<result.extend.commens.length; i++){
+		var date = new Date(result.extend.commens[i].time);
+		var html = $($.parseHTML(
+				
+				'<tr>'+
+				'<td>'+date.getFullYear() + '-' + parseInt(date.getMonth()+1) + '-' + date.getDate() + ' ' + date.getHours()+ ':' + date.getMinutes()+ ':' +date.getSeconds()+'</td>'+
+				'<td>'+result.extend.commens[i].userId+'</td>'+
+				'<td>'+result.extend.commens[i].message+'</td>'+
+				'</tr>'
+				
+			));
+		
+		if($('#js-historyComment')){
+			$('#js-historyComment > tbody').append(html);
+		}else{
+			return false;
+		}
+		
+	}
 }
 
 
