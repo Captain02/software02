@@ -15,6 +15,7 @@
 %>
 <!-- Bootstrap core CSS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/jquery.min.js"></script>
+<script src="${APP_PATH}/static/bootstrap-3.3.7/js/script.js"></script>
 <link href="${APP_PATH}/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
 <!-- Custom styles for this template -->
@@ -26,9 +27,11 @@ $(function() {
 		type:"GET",
 		data:"",
 		success:function(result){
-			console.log(result);
+			addGroup(result);
 		}
 	})
+	
+	
 })
 </script>
 </head>
@@ -42,11 +45,8 @@ $(function() {
 			<input name="userName" type="text" class="form-control" placeholder="用户名" required autofocus> 
 			<label for="inputPassword" class="sr-only">密码</label> 
 			<input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-			<select name="groupId" id="inputPassword" class="form-control" required>
-				<option value="emp">员工</option>
-				<option value="zuz">组长</option>
-				<option value="zc">总裁</option>
-				<option value="jl">经理</option>
+			<select name="groupId" id="js-group" class="form-control" required>
+				
 			</select>
 			<div class="checkbox">
 			</div>

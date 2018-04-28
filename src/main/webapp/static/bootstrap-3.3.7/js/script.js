@@ -1,5 +1,5 @@
 /**
- * 文件说明：实现多个复选框的全选
+ * 实现多个复选框的全选
  */
 $(function(){
 	if(document.getElementById('selectAll') == null){
@@ -25,3 +25,33 @@ $(function(){
         }
     }
 })
+
+
+/**
+ * @login_new.jsp  请求ajax,生成组别
+ */
+function addGroup(result){
+	
+	for(var i = 0; i<result.extend.groups.length; i++){
+		var html = $($.parseHTML(" '<option value="+result.extend.groups[i].id+">"+result.extend.groups[i].name+"</option>' "));
+		
+		if($('#js-group')){
+			$('#js-group').append(html);
+		}else{
+			return false;
+		}
+		
+	}
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
