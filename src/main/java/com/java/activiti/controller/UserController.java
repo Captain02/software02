@@ -10,10 +10,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -127,7 +129,7 @@ public class UserController {
 	public Msg deleteUser(HttpServletResponse response, HttpServletRequest request) throws Exception {
 		String id = request.getParameter("ids");
 		List<String> list = new ArrayList<String>();
-		String[] strs = id.split(",");
+		String[] strs = id.split("-");
 		for (String str : strs) {
 			list.add(str);
 		}
@@ -141,12 +143,15 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/userSave")
-	public String userSave(HttpServletResponse response, com.java.activiti.model.User user) throws Exception {
-		userService.addUser(user);
-		return "redirect:userPage";
+	@ResponseBody
+	@RequestMapping(value="/userSave",method=RequestMethod.POST)
+	public Msg userSave(UserEntity user){
+		identityService.saveUser(user);
+		
+		//userService.addUser(user);
+		return Msg.success();
 	}
-	
+	//根据用户名查找用户
 	@ResponseBody
 	@RequestMapping(value="/findUserById",method=RequestMethod.GET)
 	public Msg findUserById(@RequestParam("userId")String userId) {
@@ -154,47 +159,13 @@ public class UserController {
 		return Msg.success().add("user", user);
 	}
 
-	@RequestMapping("/listWithGroups")
-	public String listWithGroups(HttpServletResponse response, String rows, String page, User user) throws Exception {
-		// PageInfo<User> userPage=new PageInfo<User>();
-		// Map<String,Object> userMap=new HashMap<String, Object>();
-		// userMap.put("id", user.getId());
-		// Integer pageSize=Integer.parseInt(rows);
-		// userPage.setPageSize(pageSize);
-		//
-		// // 第几页
-		// String pageIndex = page;
-		// if (pageIndex == null || pageIndex == "") {
-		// pageIndex = "1";
-		// }
-		// userPage.setPageIndex((Integer.parseInt(pageIndex) - 1)
-		// * pageSize);
-		// // 取得总页数
-		// int userCount=userService.userCount(userMap);
-		// userPage.setCount(userCount);
-		// userMap.put("pageIndex", userPage.getPageIndex());
-		// userMap.put("pageSize", userPage.getPageSize());
-		//
-		// List<User> userList = userService.userPage(userMap);
-		// for(User users:userList){
-		// StringBuffer buffer=new StringBuffer();
-		// List<Group> groupList=groupService.findByUserId(users.getId());
-		// for(Group g:groupList){
-		// buffer.append(g.getName()+",");
-		// }
-		// if(buffer.length()>0){
-		// //deleteCharAt 删除最后一个元素
-		// users.setGroups(buffer.deleteCharAt(buffer.length()-1).toString());
-		// }else{
-		// user.setGroups(buffer.toString());
-		// }
-		// }
-		// JSONArray jsonArray=JSONArray.fromObject(userList);
-		// JSONObject result=new JSONObject();
-		// result.put("rows", jsonArray);
-		// result.put("total", userCount);
-		// ResponseUtil.write(response, result);
-		return null;
+	//查找用户所拥有那些组
+	@ResponseBody
+	@RequestMapping(value="/listWithGroups",method=RequestMethod.GET)
+	public Msg listWithGroups(@RequestParam("userId")String userId,Model model) throws Exception {
+		List<Group> groupByUserId = identityService.createGroupQuery().groupMember(userId).list();
+		List<Group> allGroup = identityService.createGroupQuery().list();
+		return Msg.success().add("groupByUserId", groupByUserId).add("allGroup", allGroup);
 	}
 
 }

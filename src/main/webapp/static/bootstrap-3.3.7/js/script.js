@@ -79,7 +79,7 @@ $(function(){
 		if( $('#editor-myModal') ){
 			var editorModal = $('#editor-myModal');
 			
-			editorModal.find('input[name="username"]').val($(this).attr('data-userid'));
+			editorModal.find('input[name="id"]').val($(this).attr('data-userid'));
 			editorModal.find('input[name="password"]').val($(this).attr('data-userpassword'));
 			editorModal.find('input[name="firstName"]').val($(this).attr('data-lastname'));
 			editorModal.find('input[name="lastName"]').val($(this).attr('data-firstname'));

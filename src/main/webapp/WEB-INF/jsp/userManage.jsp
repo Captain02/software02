@@ -60,34 +60,46 @@ function dele(ele){
     			},
     			type:"POST",
     			success:function(result){
-    				window.location.href='${APP_PATH}/admin/deploy/deployPage';
+    				window.location.href='${APP_PATH}/admin/user/userPage';
     			}
     		}) 
     	}
 	}
 }
 	function update(){
-		alert($('#userForm').serialize());
 		$.ajax({
 			url:'${APP_PATH}/admin/user/updateUser',
-			data:$('#userForm').serialize(),
+			data:$('#updateUserForm').serialize(),
 			type:"POST",
 			success:function(result){
-				console.log(result)
+				window.location.href='${APP_PATH}/admin/user/userPage';
 			}
 		})
 	}
 	
-	function showUserInfo(ele) {
+	function save(){
+		alert($('#saveUserForm').serialize());
+		$.ajax({
+			url:'${APP_PATH}/admin/user/userSave',
+			data:$('#saveUserForm').serialize(),
+			type:"POST",
+			success:function(result){
+				window.location.href='${APP_PATH}/admin/user/userPage';
+			}
+		})
+	}
+	
+	function findGroupByUserId(ele) {
 		var userId = $(ele).attr('data-userId');
 		$.ajax({
-			url:'${APP_PATH}/admin/user/findUserById',
+			url:'${APP_PATH}/admin/user/listWithGroups',
 			data:{
 				'userId':userId
 			},
 			type:"GET",
 			success:function(result){
-				console.log(result);
+				console.log(result.extend.groupByUserId);
+				console.log(result.extend.allGroup);
 			}
 		})
 	}
@@ -207,8 +219,8 @@ function dele(ele){
 								                            
 								                            <li role="separator" class="divider"></li>
 								                            
-								                            <li><a href="javascript:;" class="js-editor-group" 
-								                            data-userid="${user.id}"
+								                            <li><a onclick="findGroupByUserId(this);" class="js-editor-group" 
+								                            data-userId="${user.id}"
 								                            data-toggle="modal" 
 									                        data-target="#group-myModal"
 								                            >修改组</a></li>
@@ -281,7 +293,7 @@ function dele(ele){
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">添加用户信息</h4>
 			      </div>
-			      <form action="${APP_PATH}/admin/user/userSave" method="post">
+			      <form id="saveUserForm" method="post">
 				      <div class="modal-body">
 				      
 				       <div class="form-group clearfix">
@@ -320,19 +332,10 @@ function dele(ele){
 						    </div>
 					  	 </div>
 					  	 
-					  	  <!-- <div class="form-group clearfix">
-						    <label for="" class="col-md-2">组ID:</label>
-						    <div class="col-md-10">
-						    	<select class="form-control" name="group">
-						    		
-						    	</select>
-						    </div>
-					  	 </div> -->
-					  	 
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary js-add">添加</button>
+				        <button type="button" onclick="save()" class="btn btn-primary js-add">添加</button>
 				      </div>
 			      </form>
 			    </div>
@@ -347,13 +350,13 @@ function dele(ele){
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
 			      </div>
-			      <form action="${APP_PATH}/admin/user/userSave" method="post" id="userForm">
+			      <form method="post" id="updateUserForm">
 				      <div class="modal-body">
 				      
 				       <div class="form-group clearfix">
 						    <label for="" class="col-md-2">用户名:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="username" placeholder="输入用户名">
+						    	<input class="form-control" type="text" name="id" placeholder="输入用户名">
 						    </div>
 					  	 </div>
 					  	 
