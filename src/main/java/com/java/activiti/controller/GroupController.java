@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.IdentityService;
@@ -18,8 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.java.activiti.model.PageInfo;
 import com.java.activiti.service.GroupService;
 import com.java.activiti.util.Msg;
 
@@ -59,12 +57,12 @@ public class GroupController {
 	 */
 	@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
 	public String groupPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) throws Exception {
-		PageInfo<Group> pageInfo = null;
-		PageHelper.startPage(pn, 8);
-		List<Group> list = identityService.createGroupQuery().list();
-		pageInfo = new PageInfo<>(list, 5);
+		long count = identityService.createGroupQuery().count();
+		List<Group> list = identityService.createGroupQuery().listPage((pn-1)*8, 8);
+		PageInfo<Group> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
-
 		return "groupManage";
 	}
 

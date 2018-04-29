@@ -15,8 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.java.activiti.model.PageInfo;
 import com.java.activiti.util.Msg;
 
 /**
@@ -43,13 +42,14 @@ public class DeployController {
 	 */
 	@RequestMapping(value="/deployPage",method=RequestMethod.GET)
 	public String deployPage(@RequestParam(value="pn",defaultValue="1")Integer pn,Model model) throws Exception{
-		PageInfo<Deployment> pageInfo = null;
-		PageHelper.startPage(pn,8);
+		long count = repositoryService.createDeploymentQuery().count();
 		List<Deployment> list=repositoryService.createDeploymentQuery()//创建流程查询实例
 				.orderByDeploymenTime().desc()  //降序
-				.list();
-		pageInfo = new PageInfo<>(list,5);
-		
+				.listPage((pn-1)*8, 8);
+		PageInfo<Deployment> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
+		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("pageInfo", pageInfo);
 		return "deployManage";
 	}

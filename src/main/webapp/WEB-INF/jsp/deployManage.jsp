@@ -181,19 +181,9 @@ function dele(ele){
 	                             </a>
 	                         </li>
 	                     </c:if>
-	                     
-	                     <c:forEach items="${pageInfo.navigatepageNums}" var="pageNum">
-	                         <c:if test="${pageNum==pageInfo.pageNum}">
-	                             <li class="active">
-	                                 <a href="#">${pageNum}</a>
-	                             </li>
-	                         </c:if>
-	                         <c:if test="${pageNum!=pageInfo.pageNum}">
-	                             <li>
-	                                 <a href="${APP_PATH}/admin/deploy/deployPage?pn=${pageNum}">${pageNum}</a>
-	                             </li>
-	                         </c:if>
-	                     </c:forEach>
+                        <li class="active">
+                            <a href="#">${pageInfo.pageNum}</a>
+                        </li>
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
@@ -204,7 +194,7 @@ function dele(ele){
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/deploy/deployPage?pn=${pageInfo.pages}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/deploy/deployPage?pn=${pageInfo.navigatepageNums}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>

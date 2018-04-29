@@ -66,9 +66,8 @@ public class LeaveController {
 		PageInfo<Leave> pageInfo = null;
 		PageHelper.startPage(pn,8);
 		List<Leave> list = leaveService.leavePage(map);
-		pageInfo = new PageInfo<>(list,5);
+		pageInfo = new PageInfo<>(list,1);
 		
-		model.addAttribute("pn", pn);
 		model.addAttribute("pageInfo", pageInfo);
 		
 		return "requestTask";

@@ -1,54 +1,96 @@
 package com.java.activiti.model;
+
 import java.util.List;
 
-/*
- * ��ҳ������
- */
 public class PageInfo<T> {
-	public Integer pageSize = 5;
-	private Integer count;// �ܼ�¼��
-	private List<T> pageList;// ��ǰҳ�ļ�¼����
-	private Integer pageIndex;// ��ǰҳ��
-	private Integer totalPages;// ��ҳ��
 
-	public Integer getPageSize() {
+	//当前第几页
+	private int pageNum;
+	
+	//当前页的 List
+	private List<T> list;
+	
+	//每页显示多少条记录
+	private int pageSize = 8;
+	
+	//共有多少条记录
+	private long totalItemNumber;
+
+	//构造器中需要对 pageNo 进行初始化
+	public PageInfo(int pageNo) {
+		super();
+		this.pageNum = pageNo;
+	}
+	
+	//需要校验一下
+	public int getPageNum() {
+		if(pageNum < 0)
+			pageNum = 1;
+		
+		if(pageNum > getNavigatepageNums()){
+			pageNum = getNavigatepageNums();
+		}
+		
+		return pageNum;
+	}
+	
+	public int getPageSize() {
 		return pageSize;
 	}
-
-	public void setPageSize(Integer pageSize) {
-		this.pageSize = pageSize;
+	
+	public void setList(List<T> list) {
+		this.list = list;
 	}
-
-	public Integer getCount() {
-		return count;
+	
+	public List<T> getList() {
+		return list;
 	}
-
-
-	public void setCount(Integer count) {
-		this.count = count;
+	
+	//获取总页数
+	public int getNavigatepageNums(){
+		
+		int totalPageNumber = (int)totalItemNumber / pageSize;
+		
+		if(totalItemNumber % pageSize != 0){
+			totalPageNumber++;
+		}
+		
+		return totalPageNumber;
 	}
-
-	public List<T> getPageList() {
-		return pageList;
+	
+	public void setTotalItemNumber(long totalItemNumber) {
+		this.totalItemNumber = totalItemNumber;
 	}
-
-	public void setPageList(List<T> pageList) {
-		this.pageList = pageList;
+	
+	public boolean getHasNextPage(){
+		if(getPageNum() < getNavigatepageNums()){
+			return true;
+		}
+		
+		return false;
 	}
-
-	public Integer getPageIndex() {
-		return pageIndex;
+	
+	public boolean getHasPreviousPage(){
+		if(getPageNum() > 1){
+			return true;
+		}
+		
+		return false;
 	}
-
-	public void setPageIndex(Integer pageIndex) {
-		this.pageIndex = pageIndex;
+	
+	public int getPrevPage(){
+		if(getHasPreviousPage()){
+			return getPageNum() - 1;
+		}
+		
+		return getPageNum();
 	}
-
-	public Integer getTotalPages() {
-		this.totalPages = this.count / this.pageSize;
-		if (this.count % this.pageSize != 0)
-			this.totalPages++;
-		return this.totalPages;
+	
+	public int getNextPage(){
+		if(getHasNextPage()){
+			return getPageNum() + 1;
+		}
+		
+		return getPageNum();
 	}
-
 }

@@ -90,7 +90,6 @@
 								role="tabpanel" aria-labelledby="headingFour">
 								<div class="panel-body">
 									<ul>
-										<li><a><i class="glyphicon glyphicon-edit"></i>修改密码</a></li>
 										<li><a href="${APP_PATH}/admin/user/logout"><i class="glyphicon glyphicon-remove-sign"></i>注销用户</a></li>
 									</ul>
 								</div>

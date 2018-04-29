@@ -37,9 +37,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.java.activiti.model.Leave;
-import com.java.activiti.model.MemberShip;
+import com.java.activiti.model.PageInfo;
 import com.java.activiti.service.LeaveService;
 import com.java.activiti.util.Msg;
 
@@ -115,12 +114,13 @@ public class TaskController {
 	public String taskPage(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn,
 			@RequestParam(value = "name", required = false) String name, Model model) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
-		System.out.println(userId);
-		PageInfo<Task> pageInfo = null;
-		PageHelper.startPage(pn, 8);
-		List<Task> list = taskService.createTaskQuery().taskCandidateUser(userId).list();
-		pageInfo = new PageInfo<>(list, 5);
-		System.out.println(list);
+		long count = taskService.createTaskQuery().taskCandidateUser(userId).count();
+		List<Task> list = taskService.createTaskQuery()
+				.taskCandidateUser(userId)
+				.listPage((pn - 1) * 8, 8);
+		PageInfo<Task> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		return "agencyTask";
 	}
@@ -180,7 +180,8 @@ public class TaskController {
 	public Msg listHistoryComment(HttpServletResponse response, @RequestParam(value = "taskId") String taskId)
 			throws Exception {
 		List<Comment> comments = null;
-		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId)
+		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery()
+				.taskId(taskId)
 				.singleResult();
 		if (taskInstance != null) {
 			comments = taskService.getProcessInstanceComments(taskInstance.getProcessInstanceId());
@@ -275,18 +276,24 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/finishedList")
-	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request, Model model) throws Exception {
+	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request,
+			Model model) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 		String groupId = (String) request.getSession().getAttribute("groupId");
-		PageInfo<HistoricTaskInstance> pageInfo = null;
-		PageHelper.startPage(pn, 8);
-		// 创建流程历史实例查询
-		List<HistoricTaskInstance> histList = historyService.createHistoricTaskInstanceQuery()
+
+		long count = historyService.createHistoricTaskInstanceQuery()
 				.taskCandidateUser(userId)
 				.taskCandidateGroup(groupId)
-				.list();
-		pageInfo = new PageInfo<>(histList, 5);
+				.count();
+		// 创建流程历史实例查询
+		List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
+				.taskCandidateUser(userId)
+				.taskCandidateGroup(groupId)
+				.listPage((pn - 1) * 8, 8);
 
+		PageInfo<HistoricTaskInstance> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 
 		return "finishedTask";
@@ -302,7 +309,7 @@ public class TaskController {
 	 */
 	@ResponseBody
 	@RequestMapping("/listAction")
-	public Msg listAction(@RequestParam("taskId") String taskId,Model model) throws Exception {
+	public Msg listAction(@RequestParam("taskId") String taskId, Model model) throws Exception {
 		HistoricTaskInstance hti = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
 		String processInstanceId = hti.getProcessInstanceId(); // 获取流程实例id
 

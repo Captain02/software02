@@ -15,16 +15,14 @@ import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.java.activiti.model.MemberShip;
+import com.java.activiti.model.PageInfo;
 import com.java.activiti.service.GroupService;
 import com.java.activiti.service.MemberShipService;
 import com.java.activiti.service.UserService;
@@ -95,11 +93,13 @@ public class UserController {
 	@RequestMapping("/userPage")
 	public String userPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) throws Exception {
 
-		PageInfo<User> pageInfo = null;
-		PageHelper.startPage(pn, 8);
-		List<User> list = identityService.createUserQuery().list();
-		pageInfo = new PageInfo<>(list, 5);
+		long count = identityService.createUserQuery().count();
+		List<User> list = identityService.createUserQuery().listPage((pn-1)*8, 8);
+		PageInfo<User> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
+		
 		return "userManage";
 	}
 

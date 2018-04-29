@@ -1,7 +1,5 @@
 package com.java.activiti.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
@@ -17,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.java.activiti.model.PageInfo;
+
 
 /**
  * 
@@ -41,13 +39,14 @@ public class ProcessDefinitionController {
 	 */
 	@RequestMapping("/processDefinitionPage")
 	public String processDefinitionPage(@RequestParam(value="pn",defaultValue="1")Integer pn,Model model) throws Exception{
-		PageInfo<ProcessDefinition> pageInfo = null;
-		PageHelper.startPage(pn,8);
+		
+		long count = repositoryService.createDeploymentQuery().count();
 		List<ProcessDefinition> list=repositoryService.createProcessDefinitionQuery()
 				.orderByDeploymentId().desc()
-				.list();
-		pageInfo = new PageInfo<>(list,5);
-		
+				.listPage((pn-1)*8, 8);
+		PageInfo<ProcessDefinition> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		return "processDefinitionManage";
 	}
