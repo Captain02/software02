@@ -67,7 +67,7 @@
 								<div class="panel-body">
 									<ul>
 										<li><a href="${APP_PATH}/admin/user/userPage"><i class="glyphicon glyphicon-user"></i>用户管理</a></li>
-										<li><a href=""><i class="glyphicon glyphicon-home"></i>组管理</a></li>
+										<li><a href="${APP_PATH}/admin/group/groupPage"><i class="glyphicon glyphicon-home"></i>组管理</a></li>
 									</ul>
 								</div>
 							</div>
