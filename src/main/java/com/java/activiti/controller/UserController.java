@@ -1,5 +1,6 @@
 package com.java.activiti.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -9,14 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -24,6 +26,7 @@ import com.java.activiti.model.MemberShip;
 import com.java.activiti.service.GroupService;
 import com.java.activiti.service.MemberShipService;
 import com.java.activiti.service.UserService;
+import com.java.activiti.util.Msg;
 
 /**
  * 用户管理
@@ -43,7 +46,7 @@ public class UserController {
 
 	@Resource
 	private GroupService groupService;
-	
+
 	@Autowired
 	private IdentityService identityService;
 
@@ -57,7 +60,7 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/userLogin")
-	public String userLogin(HttpServletResponse response, HttpServletRequest request,Model model) throws Exception {
+	public String userLogin(HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userName", request.getParameter("userName"));
 		map.put("password", request.getParameter("password"));
@@ -88,12 +91,12 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/userPage")
-	public String userPage(@RequestParam(value="pn",defaultValue="1")Integer pn,Model model) throws Exception {
-		
+	public String userPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) throws Exception {
+
 		PageInfo<User> pageInfo = null;
-		PageHelper.startPage(pn,8);
+		PageHelper.startPage(pn, 8);
 		List<User> list = identityService.createUserQuery().list();
-		pageInfo = new PageInfo<>(list,5);
+		pageInfo = new PageInfo<>(list, 5);
 		model.addAttribute("pageInfo", pageInfo);
 		return "userManage";
 	}
@@ -104,10 +107,12 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/updateUser")
-	public String updateUser(HttpServletResponse response, User uses) throws Exception {
-		//userService.updateUser(uses);
-		return null;
+	@ResponseBody
+	@RequestMapping(value = "/updateUser", method = RequestMethod.POST)
+	public Msg updateUser(UserEntity user) throws Exception {
+		identityService.deleteUser(user.getId());
+		identityService.saveUser(user);
+		return Msg.success();
 	}
 
 	/**
@@ -117,28 +122,17 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
+	@ResponseBody
 	@RequestMapping("/deleteUser")
-	public String deleteUser(HttpServletResponse response, HttpServletRequest request) throws Exception {
-		// String id=request.getParameter("ids");
-		// JSONObject json=new JSONObject();
-		// List<String> list=new ArrayList<String>();
-		// String[] strs = id.split(",");
-		// for (String str : strs) {
-		// list.add(str);
-		// }
-		// try {
-		// int userResult=userService.deleteUser(list);
-		// if(userResult>0){
-		// json.put("success", true);
-		// }else{
-		// json.put("success", false);
-		// }
-		// } catch (Exception e) {
-		// json.put("success", false);
-		// e.printStackTrace();
-		// }
-		// ResponseUtil.write(response, json);
-		return null;
+	public Msg deleteUser(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		String id = request.getParameter("ids");
+		List<String> list = new ArrayList<String>();
+		String[] strs = id.split(",");
+		for (String str : strs) {
+			list.add(str);
+		}
+		userService.deleteUser(list);
+		return Msg.success();
 	}
 
 	/**

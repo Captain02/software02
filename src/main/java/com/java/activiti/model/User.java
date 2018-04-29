@@ -50,6 +50,11 @@ public class User {
 	public void setGroups(String groups) {
 		this.groups = groups;
 	}
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", password=" + password + ", groups=" + groups + "]";
+	}
 	
 	
 }

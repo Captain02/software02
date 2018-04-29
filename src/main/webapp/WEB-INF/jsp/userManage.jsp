@@ -50,10 +50,11 @@ function dele(ele){
 		ids = pushArray.join('-');
         $(ele).attr('data-id',ids);
         
-        if(confirm('确定要删除所选流程吗？')){
+        if(confirm('确定要删除所选用户吗？')){
     		var ids = $(ele).attr('data-id');
-    		$.ajax({
-    			url:"${APP_PATH}/admin/deploy/delDeploy",
+    		alert(ids);
+    		 $.ajax({
+    			url:"${APP_PATH}/admin/user/deleteUser",
     			data:{
     				'ids':ids
     			},
@@ -61,12 +62,21 @@ function dele(ele){
     			success:function(result){
     				window.location.href='${APP_PATH}/admin/deploy/deployPage';
     			}
-    		})
+    		}) 
     	}
 	}
-	
-	
 }
+	function update(){
+		alert($('#userForm').serialize());
+		$.ajax({
+			url:'${APP_PATH}/admin/user/updateUser',
+			data:$('#userForm').serialize(),
+			type:"POST",
+			success:function(result){
+				console.log(result)
+			}
+		})
+	}
 </script>
 </head>
 
@@ -268,14 +278,14 @@ function dele(ele){
 						    </div>
 					  	 </div>
 					  	 
-					  	  <div class="form-group clearfix">
+					  	  <!-- <div class="form-group clearfix">
 						    <label for="" class="col-md-2">组ID:</label>
 						    <div class="col-md-10">
 						    	<select class="form-control" name="group">
 						    		
 						    	</select>
 						    </div>
-					  	 </div>
+					  	 </div> -->
 					  	 
 				      </div>
 				      <div class="modal-footer">
@@ -295,7 +305,7 @@ function dele(ele){
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
 			      </div>
-			      <form action="${APP_PATH}/admin/user/userSave" method="post">
+			      <form action="${APP_PATH}/admin/user/userSave" method="post" id="userForm">
 				      <div class="modal-body">
 				      
 				       <div class="form-group clearfix">
@@ -313,10 +323,17 @@ function dele(ele){
 					  	 </div>
 					  	 
 					  	 
-					  	 <div class="form-group clearfix">
-						    <label for="" class="col-md-2">姓名:</label>
+					  	  <div class="form-group clearfix">
+						    <label for="" class="col-md-2">姓:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="name" placeholder="输入姓名">
+						    	<input class="form-control" type="text" name="firstName" placeholder="输入姓氏">
+						    </div>
+					  	 </div>
+					  	 
+					  	 <div class="form-group clearfix">
+						    <label for="" class="col-md-2">名:</label>
+						    <div class="col-md-10">
+						    	<input class="form-control" type="text" name="lastName" placeholder="输入名字">
 						    </div>
 					  	 </div>
 					  	 					  	 
@@ -327,19 +344,19 @@ function dele(ele){
 						    </div>
 					  	 </div>
 					  	 
-					  	  <div class="form-group clearfix">
+					  	  <!-- <div class="form-group clearfix">
 						    <label for="" class="col-md-2">组ID:</label>
 						    <div class="col-md-10">
 						    	<select class="form-control" name="group">
 						    		
 						    	</select>
 						    </div>
-					  	 </div>
+					  	 </div> -->
 					  	 
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="submit" class="btn btn-primary js-add">添加</button>
+				        <button type="button" onclick="update()" class="btn btn-primary js-add">添加</button>
 				      </div>
 			      </form>
 			    </div>
