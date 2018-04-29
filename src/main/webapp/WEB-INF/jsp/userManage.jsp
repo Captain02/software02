@@ -107,10 +107,8 @@ function dele(ele){
 		var groupId = []; 
 		var joinId = '';
 		
-		$('#group-myModal input.groupid').each(function(){
-			if($(this).attr('checked')){
+		 $('#group-myModal input.groupid:checked').each(function(){		
 				groupId.push($(this).val());
-			}
 		})
 		
 		joinId = groupId.join('-');
