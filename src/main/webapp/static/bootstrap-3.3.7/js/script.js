@@ -94,6 +94,42 @@ $(function(){
 })
 
 
+/**
+ * @userManage.jsp 匹配用户所在的组
+ */
+function matchingGroup(result){
+	var allGroups = [];
+	var userHaveGroups = [];
+	
+	$('#group-myModal label').remove();
+	
+	$.each(result.extend.allGroup,function(index,value){
+		var allGroupsHtml = $($.parseHTML(
+				
+				'<label class="checkbox-inline">'+
+		      		'<input class="groupid" name="" value="'+result.extend.allGroup[index].id+'" type="checkbox">'+
+					''+result.extend.allGroup[index].name+''+
+		      	'</label>'
+					
+			));
+		$('#group-myModal .modal-body').append(allGroupsHtml);
+		
+	})
+	
+	$.each(result.extend.groupByUserId,function(index,value){
+		userHaveGroups.push(value.id);
+	})
+	
+	$('#group-myModal input.groupid').each(function(){
+		var groupid = $(this);
+		
+		if($.inArray(groupid.val(),userHaveGroups) >= 0){
+			groupid.attr('checked','checked');
+		}
+		
+	})
+}
+
 
 
 

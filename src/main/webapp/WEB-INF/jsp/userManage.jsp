@@ -98,10 +98,24 @@ function dele(ele){
 			},
 			type:"GET",
 			success:function(result){
-				console.log(result.extend.groupByUserId);
-				console.log(result.extend.allGroup);
+				matchingGroup(result);
 			}
 		})
+	}
+	
+	function updateGroup(){
+		var groupId = []; 
+		var joinId = '';
+		
+		$('#group-myModal input.groupid').each(function(){
+			if($(this).attr('checked')){
+				groupId.push($(this).val());
+			}
+		})
+		
+		joinId = groupId.join('-');
+		
+		alert(joinId);
 	}
 </script>
 </head>
@@ -418,13 +432,11 @@ function dele(ele){
 			      </div>
 			      <form action="${APP_PATH}/admin/user/userSave" method="post" id="userForm">
 				      <div class="modal-body">
-				      	<label>
-      						<input type="checkbox"> 管理员
-    					</label>
+				      
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="button" onclick="update()" class="btn btn-primary js-editor">保存</button>
+				        <button type="button" onclick="updateGroup()" class="btn btn-primary js-editor">保存</button>
 				      </div>
 			      </form>
 			    </div>
