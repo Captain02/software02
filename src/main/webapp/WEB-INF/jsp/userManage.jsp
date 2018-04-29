@@ -77,6 +77,20 @@ function dele(ele){
 			}
 		})
 	}
+	
+	function showUserInfo(ele) {
+		var userId = $(ele).attr('data-userId');
+		$.ajax({
+			url:'${APP_PATH}/admin/user/findUserById',
+			data:{
+				'userId':userId
+			},
+			type:"GET",
+			success:function(result){
+				console.log(result);
+			}
+		})
+	}
 </script>
 </head>
 
@@ -173,7 +187,7 @@ function dele(ele){
 										  		<td class="userInfo">${user.password}</td>
 										  		<td class="userInfo">${user.firstName}${user.lastName}</td>
 										  		<td class="userInfo">${user.email}</td>
-										  		<td><a data-toggle="modal" data-target="#editor-myModal" onclick="showUserInfo(this)"><i class="glyphicon glyphicon-edit" style="color: #f0ad4e"></i>修改</a></td>
+										  		<td><a data-toggle="modal" data-userId='${user.id}' data-target="#editor-myModal" onclick="showUserInfo(this)"><i class="glyphicon glyphicon-edit" style="color: #f0ad4e"></i>修改</a></td>
 										  	</tr>
 									  </c:forEach>
 									  </tbody>

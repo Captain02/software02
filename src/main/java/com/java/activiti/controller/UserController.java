@@ -146,6 +146,13 @@ public class UserController {
 		userService.addUser(user);
 		return "redirect:userPage";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="/findUserById",method=RequestMethod.GET)
+	public Msg findUserById(@RequestParam("userId")String userId) {
+		User user = identityService.createUserQuery().userId(userId).singleResult();
+		return Msg.success().add("user", user);
+	}
 
 	@RequestMapping("/listWithGroups")
 	public String listWithGroups(HttpServletResponse response, String rows, String page, User user) throws Exception {
