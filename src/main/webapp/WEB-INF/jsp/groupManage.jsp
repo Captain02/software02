@@ -63,7 +63,7 @@ function dele(ele){
     				if (result.code==100) {
 	    				window.location.href='${APP_PATH}/admin/group/groupPage';
 					}else{
-						alert("改组存在人员");
+						alert("该组存在人员");
 					}
     			}
     		}) 
@@ -146,7 +146,7 @@ function dele(ele){
 							
 							<div class="panel panel-default">
 								<div class="panel-heading">
-									用户管理
+									组管理
 									<form action="" method="post" style="display: inline-block; margin-left: 15px;">
 										<div class="form-group" style=" margin-bottom: 0;">
 											<input type="text" name="name"/>
@@ -293,28 +293,28 @@ function dele(ele){
 			  </div>
 		</div>
 			
-			<!--修改用户-->
+			<!--修改组-->
 			<div class="modal" id="editor-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+			        <h4 class="modal-title" id="myModalLabel">修改组</h4>
 			      </div>
 			      <form method="post" id="updateGroupForm">
 				      <div class="modal-body">
 				      
 				       <div class="form-group clearfix">
-						    <label for="" class="col-md-2">用户名:</label>
+						    <label for="" class="col-md-2">组ID:</label>
 						    <div class="col-md-10">
 						    	<input class="form-control" type="text" name="id" placeholder="输入用户名">
 						    </div>
 					  	 </div>
 					  	 
 					  	   <div class="form-group clearfix">
-						    <label for="" class="col-md-2">名称:</label>
+						    <label for="" class="col-md-2">组名:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="name" placeholder="输入密码">
+						    	<input class="form-control" type="text" name="name" placeholder="输入组名">
 						    </div>
 					  	 </div>
 					  	 

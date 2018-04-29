@@ -84,6 +84,7 @@ $(function(){
 			editorModal.find('input[name="firstName"]').val($(this).attr('data-lastname'));
 			editorModal.find('input[name="lastName"]').val($(this).attr('data-firstname'));
 			editorModal.find('input[name="email"]').val($(this).attr('data-email'));
+			editorModal.find('input[name="name"]').val($(this).attr('data-groupName'));
 			
 		}else{
 			return false;
