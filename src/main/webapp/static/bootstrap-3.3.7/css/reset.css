@@ -22,12 +22,16 @@ ul, ol {
 	margin: 0;
 	padding: 0;
 }
-label{
+
+label {
 	margin-bottom: 0;
+	font-weight: normal;
 }
-input[type="checkbox"]:hover{
+
+input[type="checkbox"]:hover {
 	cursor: pointer;
 }
+
 a {
 	color: #333;
 }
@@ -42,11 +46,11 @@ a:hover {
 }
 
 i.glyphicon {
-	margin-right: 5px;
+	margin-right: 15px;
 }
 
 .wrapper {
-	margin-right: 15px;
+	padding: 15px;
 }
 
 footer {
@@ -60,14 +64,19 @@ footer {
 	border-top: 1px solid #ddd;
 	text-align: center;
 }
-a.oprate{
-	color:#0000a0;
-	text-decoration: underline;
+
+a.oprate i {
+	color: #5cb85c;
 }
-.form-group label{
+
+.form-group label {
 	padding-top: 7px;
 	font-weight: normal;
 }
-.modal-dialog{
+
+.modal-dialog {
 	overflow: auto;
+}
+.dropdown-menu li a{
+	text-align: center;
 }

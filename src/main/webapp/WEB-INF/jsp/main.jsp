@@ -85,7 +85,6 @@
 			
 					</div>
 			
-			<footer>底部信息</footer>
 			<!-- 查看历史批注 -->
 			<div class="modal" id="showHistoryComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">

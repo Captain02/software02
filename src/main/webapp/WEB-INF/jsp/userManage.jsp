@@ -187,7 +187,35 @@ function dele(ele){
 										  		<td class="userInfo">${user.password}</td>
 										  		<td class="userInfo">${user.firstName}${user.lastName}</td>
 										  		<td class="userInfo">${user.email}</td>
-										  		<td><a data-toggle="modal" data-userId='${user.id}' data-target="#editor-myModal" onclick="showUserInfo(this)"><i class="glyphicon glyphicon-edit" style="color: #f0ad4e"></i>修改</a></td>
+										  		<td>
+										  			<div class="btn-group">
+								                          <button type="button" class="btn btn-info btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 操作<span class="caret"></span> </button>
+								                          <ul class="dropdown-menu">
+								                          
+								                            <li>
+									                            <a href="javascript:;" class="js-editor-user" 
+									                            data-userid="${user.id}"
+									                            data-userpassword="${user.password}"
+									                            data-lastname="${user.firstName}"
+									                            data-firstname="${user.lastName}"
+									                            data-email="${user.email}"
+									                            data-toggle="modal" 
+									                            data-target="#editor-myModal"
+									                            >修改用户
+									                            </a>
+								                            </li>
+								                            
+								                            <li role="separator" class="divider"></li>
+								                            
+								                            <li><a href="javascript:;" class="js-editor-group" 
+								                            data-userid="${user.id}"
+								                            data-toggle="modal" 
+									                        data-target="#group-myModal"
+								                            >修改组</a></li>
+								                            
+								                          </ul>
+								                        </div>
+										  		</td>
 										  	</tr>
 									  </c:forEach>
 									  </tbody>
@@ -311,7 +339,7 @@ function dele(ele){
 			  </div>
 		</div>
 			
-			<!--编辑用户信息-->
+			<!--修改用户-->
 			<div class="modal" id="editor-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
@@ -325,7 +353,7 @@ function dele(ele){
 				       <div class="form-group clearfix">
 						    <label for="" class="col-md-2">用户名:</label>
 						    <div class="col-md-10">
-						    	<input class="form-control" type="text" name="id" placeholder="输入用户名">
+						    	<input class="form-control" type="text" name="username" placeholder="输入用户名">
 						    </div>
 					  	 </div>
 					  	 
@@ -370,7 +398,30 @@ function dele(ele){
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="button" onclick="update()" class="btn btn-primary js-add">添加</button>
+				        <button type="button" onclick="update()" class="btn btn-primary js-editor">保存</button>
+				      </div>
+			      </form>
+			    </div>
+			  </div>
+		</div>
+			
+			<!-- 修改组 -->
+			<div class="modal" id="group-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			  <div class="modal-dialog" role="document">
+			    <div class="modal-content">
+			      <div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+			        <h4 class="modal-title" id="myModalLabel">修改用户信息</h4>
+			      </div>
+			      <form action="${APP_PATH}/admin/user/userSave" method="post" id="userForm">
+				      <div class="modal-body">
+				      	<label>
+      						<input type="checkbox"> 管理员
+    					</label>
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+				        <button type="button" onclick="update()" class="btn btn-primary js-editor">保存</button>
 				      </div>
 			      </form>
 			    </div>

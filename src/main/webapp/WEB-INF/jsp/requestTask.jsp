@@ -222,7 +222,6 @@
 			
 					</div>
 			
-			<footer>底部信息</footer>
 			
 			<!-- 新建请假单 -->
 			<div class="modal" id="addHolidayNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

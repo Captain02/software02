@@ -72,15 +72,26 @@ function addComment(result){
 /**
  * @userManage.jsp 编辑按钮填充用户信息
  */
-function showUserInfo(ele){
-//	var userName = $(ele)
-//	var passWord
-//	var name
-//	var userEmail
+$(function(){
 	
-	var userInfo = $(ele).parent.siblings('td.userInfo')
-	var showUserInfo = $('#editor-myModal > ')
-}
+	$('.js-editor-user').click(function(){
+		
+		if( $('#editor-myModal') ){
+			var editorModal = $('#editor-myModal');
+			
+			editorModal.find('input[name="username"]').val($(this).attr('data-userid'));
+			editorModal.find('input[name="password"]').val($(this).attr('data-userpassword'));
+			editorModal.find('input[name="firstName"]').val($(this).attr('data-lastname'));
+			editorModal.find('input[name="lastName"]').val($(this).attr('data-firstname'));
+			editorModal.find('input[name="email"]').val($(this).attr('data-email'));
+			
+		}else{
+			return false;
+		}
+		
+	})
+	
+})
 
 
 
