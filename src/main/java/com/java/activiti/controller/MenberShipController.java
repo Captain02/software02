@@ -2,10 +2,17 @@ package com.java.activiti.controller;
 
 import javax.annotation.Resource;
 
+import org.activiti.engine.IdentityService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.java.activiti.service.MemberShipService;
+import com.java.activiti.util.Msg;
+import com.java.activiti.util.StringUtil;
 
 @Controller
 @RequestMapping("/admin/memberShip")
@@ -13,28 +20,23 @@ public class MenberShipController {
 		@Resource
 		private MemberShipService memberShipService;
 		
-		@RequestMapping("/updateMemberShip")
-		public String updateMemberShip(String userId,String groupsIds) throws Exception{
-//			//刪除全部角色
-//			memberShipService.deleteAllGroupsByUserId(userId);
-//			
-//			if(StringUtil.isNotEmpty(groupsIds)){
-//				//分割字符串，以，分割
-//				String idsArr[]=groupsIds.split(",");
-//				for(String groupId:idsArr){
-//					User user=new User();
-//					user.setId(userId);
-//					Group group=new Group();
-//					group.setId(groupId);
-//					MemberShip memberShip=new MemberShip();
-//					memberShip.setUser(user);
-//					memberShip.setGroup(group);
-//					memberShipService.addMemberShip(memberShip);
-//				}
-//			}
-//			JSONObject result=new JSONObject();
-//			result.put("success", true);
-//			ResponseUtil.write(response, result);
-			return null;
+		@Autowired
+		private IdentityService identityService;
+		
+		@ResponseBody
+		@RequestMapping(value="/updateMemberShip",method=RequestMethod.POST)
+		public Msg updateMemberShip(@RequestParam("userId")String userId,@RequestParam("groupsIds")String groupsIds) throws Exception{
+			//刪除全部角色
+			memberShipService.deleteAllGroupsByUserId(userId);
+			System.out.println(userId+"+++++++++++++"+groupsIds);
+			if(StringUtil.isNotEmpty(groupsIds)){
+				//分割字符串，以，分割
+				String idsArr[]=groupsIds.split("-");
+				for(String groupId:idsArr){
+					
+					identityService.createMembership(userId, groupId);
+				}
+			}
+			return Msg.success();
 		}
 }

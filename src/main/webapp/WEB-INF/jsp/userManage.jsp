@@ -107,24 +107,27 @@ function dele(ele){
 		var groupId = []; 
 		var groupsIds = '';
 		var userId = $(ele).attr('data-userid');
-		alert(userId);
 		$('#group-myModal input.groupid:checked').each(function(){
 				groupId.push($(this).val());
 		})
 		
 		groupsIds = groupId.join('-');
 		
-		/* $.ajax({
-			url:'{APP_PATH}/admin/memberShip/updateMemberShip',
+		 $.ajax({
+			url:'${APP_PATH}/admin/memberShip/updateMemberShip',
 			data:{
 				'groupsIds':groupsIds,
 				'userId':userId
-			}.
+			},
 			type:"POST",
 			success:function(result){
-				console.log(result);
+				if (result.code == 100) {
+					window.location.href='${APP_PATH}/admin/user/userPage';
+				}else{
+					alert('请选择组');
+				}
 			}
-		}) */
+		}) 
 	}
 </script>
 </head>
