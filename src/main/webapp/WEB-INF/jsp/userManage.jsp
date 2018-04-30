@@ -90,6 +90,7 @@ function dele(ele){
 	
 	function findGroupByUserId(ele) {
 		var userId = $(ele).attr('data-userId');
+		$('#group-myModal').find('button.js-editor').attr('data-userid',userId);
 		$.ajax({
 			url:'${APP_PATH}/admin/user/listWithGroups',
 			data:{
@@ -102,10 +103,11 @@ function dele(ele){
 		})
 	}
 	
-	function updateGroup(){
+	function updateGroup(ele){
 		var groupId = []; 
 		var groupsIds = '';
-		
+		var userId = $(ele).attr('data-userid');
+		alert(userId);
 		$('#group-myModal input.groupid:checked').each(function(){
 				groupId.push($(this).val());
 		})
@@ -424,7 +426,7 @@ function dele(ele){
 				      </div>
 				      <div class="modal-footer">
 				        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				        <button type="button" onclick="updateGroup()" class="btn btn-primary js-editor">保存</button>
+				        <button type="button" onclick="updateGroup(this)" class="btn btn-primary js-editor">保存</button>
 				      </div>
 			      </form>
 			    </div>
