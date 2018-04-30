@@ -20,6 +20,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="userId != null and userId != '' ">
 				 userId = #{userId}
 			</if>
+			<if test="id != 0 ">
+				 AND id = #{id}
+			</if>
 		</where>
 		order by leaveDate desc
 	</select>

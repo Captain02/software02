@@ -91,15 +91,30 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/userPage")
-	public String userPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) throws Exception {
+	public String userPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "name", defaultValue = "") String name, Model model) throws Exception {
+		long count = 0;
+		List<User> list = null;
 
-		long count = identityService.createUserQuery().count();
-		List<User> list = identityService.createUserQuery().listPage((pn-1)*8, 8);
+		if (pn == 0) {
+			pn = 1;
+		}
+		
+		if ("".equals(name)) {
+			count = identityService.createUserQuery().count();
+			list = identityService.createUserQuery().listPage((pn - 1) * 8, 8);
+		}else {
+			count = identityService.createUserQuery().userId(name).count();
+			list = identityService.createUserQuery().userId(name).listPage((pn - 1) * 8, 8);
+		}
+		
 		PageInfo<User> pageInfo = new PageInfo<>(pn);
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
-		model.addAttribute("pageInfo", pageInfo);
 		
+		model.addAttribute("name", name);
+		model.addAttribute("pageInfo", pageInfo);
+
 		return "userManage";
 	}
 
@@ -144,25 +159,26 @@ public class UserController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping(value="/userSave",method=RequestMethod.POST)
-	public Msg userSave(UserEntity user){
+	@RequestMapping(value = "/userSave", method = RequestMethod.POST)
+	public Msg userSave(UserEntity user) {
 		identityService.saveUser(user);
-		
-		//userService.addUser(user);
+
+		// userService.addUser(user);
 		return Msg.success();
 	}
-	//根据用户名查找用户
+
+	// 根据用户名查找用户
 	@ResponseBody
-	@RequestMapping(value="/findUserById",method=RequestMethod.GET)
-	public Msg findUserById(@RequestParam("userId")String userId) {
+	@RequestMapping(value = "/findUserById", method = RequestMethod.GET)
+	public Msg findUserById(@RequestParam("userId") String userId) {
 		User user = identityService.createUserQuery().userId(userId).singleResult();
 		return Msg.success().add("user", user);
 	}
 
-	//查找用户所拥有那些组
+	// 查找用户所拥有那些组
 	@ResponseBody
-	@RequestMapping(value="/listWithGroups",method=RequestMethod.GET)
-	public Msg listWithGroups(@RequestParam("userId")String userId,Model model) throws Exception {
+	@RequestMapping(value = "/listWithGroups", method = RequestMethod.GET)
+	public Msg listWithGroups(@RequestParam("userId") String userId, Model model) throws Exception {
 		List<Group> groupByUserId = identityService.createGroupQuery().groupMember(userId).list();
 		List<Group> allGroup = identityService.createGroupQuery().list();
 		return Msg.success().add("groupByUserId", groupByUserId).add("allGroup", allGroup);

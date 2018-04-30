@@ -56,13 +56,24 @@ public class GroupController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value = "/groupPage", method = RequestMethod.GET)
-	public String groupPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) throws Exception {
-		long count = identityService.createGroupQuery().count();
-		List<Group> list = identityService.createGroupQuery().listPage((pn-1)*8, 8);
+	public String groupPage(@RequestParam(value = "pn", defaultValue = "1") Integer pn,@RequestParam(value = "name", defaultValue = "") String name, Model model) throws Exception {
+		long count = 0;
+		List<Group> list = null;
+		if (pn == 0) {
+			pn = 1;
+		}
+		if ("".equals(name)) {
+			count = identityService.createGroupQuery().count();
+			list = identityService.createGroupQuery().listPage((pn-1)*8, 8);
+		}else {
+			count = identityService.createGroupQuery().groupName(name).count();
+			list = identityService.createGroupQuery().groupName(name).listPage((pn-1)*8, 8);
+		}
 		PageInfo<Group> pageInfo = new PageInfo<>(pn);
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("name", name);
 		return "groupManage";
 	}
 

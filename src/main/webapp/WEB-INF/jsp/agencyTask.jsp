@@ -71,9 +71,9 @@
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <form class="navbar-form navbar-left">
+	      <form action="${APP_PATH}/admin/task/taskPage" class="navbar-form navbar-left">
 	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
+	          <input type="text" value="${name}" name="name" class="form-control" placeholder="任务名称">
 	        </div>
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
@@ -90,8 +90,8 @@
 	          </ul>
 	        </li>
 	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div>
 	</nav>
 	
 			<div class="wrapper">
@@ -149,11 +149,11 @@
 							<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
 							  <ul class="pagination ">
 							    <li>
-	                         <a href="${APP_PATH}/admin/task/taskPage?pn=1">首页</a>
+	                         <a href="${APP_PATH}/admin/task/taskPage?pn=1&name=${name}">首页</a>
 	                     </li>
 	                     <c:if test="${pageInfo.hasPreviousPage}">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum-1}&name=${name}" aria-label="Previous">
 	                                 <span aria-hidden="true">&laquo;</span>
 	                             </a>
 	                         </li>
@@ -164,14 +164,14 @@
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum+1}" aria-label="Next">
+	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum+1}&name=${name}" aria-label="Next">
 	                                 <span aria-hidden="true">&raquo;</span>
 	                             </a>
 	                         </li>
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.navigatepageNums}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.navigatepageNums}&name=${name}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>

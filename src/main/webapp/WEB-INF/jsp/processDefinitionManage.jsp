@@ -76,9 +76,9 @@ function dele(ele){
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <form class="navbar-form navbar-left">
+	      <form action="${APP_PATH}/admin/processDefinition/processDefinitionPage" class="navbar-form navbar-left">
 	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
+	          <input name="name" value="${name}" type="text" class="form-control" placeholder="流程名称">
 	        </div>
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
@@ -95,8 +95,8 @@ function dele(ele){
 	          </ul>
 	        </li>
 	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
+	    </div>
+	  </div>
 	</nav>
 	
 			<div class="wrapper">
@@ -112,12 +112,6 @@ function dele(ele){
 							<div class="panel panel-default">
 								<div class="panel-heading">
 									流程定义管理
-									<form action="" method="post" style="display: inline-block; margin-left: 15px;">
-										<div class="form-group" style=" margin-bottom: 0;">
-											<input type="text" name="name"/>
-											<input type="submit" value="搜索" />
-										</div>
-									</form>
 									
 								</div>
 								<div class="panel-body">
@@ -165,11 +159,11 @@ function dele(ele){
 						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
 							  <ul class="pagination ">
 							    <li>
-	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=1">首页</a>
+	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=1&name=${name}">首页</a>
 	                     </li>
 	                     <c:if test="${pageInfo.hasPreviousPage}">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum-1}&name=${name}" aria-label="Previous">
 	                                 <span aria-hidden="true">&laquo;</span>
 	                             </a>
 	                         </li>
@@ -180,14 +174,14 @@ function dele(ele){
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum+1}" aria-label="Next">
+	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum+1}&name=${name}" aria-label="Next">
 	                                 <span aria-hidden="true">&raquo;</span>
 	                             </a>
 	                         </li>
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.navigatepageNums}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.navigatepageNums}&name=${name}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>

@@ -48,6 +48,7 @@ public class LeaveController {
 
 	/**
 	 * 分页查询业务
+	 * 
 	 * @param response
 	 * @param rows
 	 * @param page
@@ -56,20 +57,22 @@ public class LeaveController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/list")
-	public String leavePage(@RequestParam(value="pn",defaultValue="1")Integer pn,
-			@RequestParam(value="name",defaultValue="")String name,Model model,
-			HttpServletRequest request) throws Exception {
+	public String leavePage(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "id", defaultValue = "0") Integer id, Model model, HttpServletRequest request)
+			throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", userId);
-		
+		map.put("id", id);
+
 		PageInfo<Leave> pageInfo = null;
-		PageHelper.startPage(pn,8);
+		PageHelper.startPage(pn, 8);
 		List<Leave> list = leaveService.leavePage(map);
-		pageInfo = new PageInfo<>(list,1);
+		pageInfo = new PageInfo<>(list, 1);
 		
 		model.addAttribute("pageInfo", pageInfo);
-		
+		model.addAttribute("id", id);
+
 		return "requestTask";
 	}
 
@@ -83,9 +86,9 @@ public class LeaveController {
 	 */
 	@ResponseBody
 	@RequestMapping("/save")
-	public Msg save(Leave leave,HttpServletRequest request) throws Exception {
+	public Msg save(Leave leave, HttpServletRequest request) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
-		
+
 		User user = new User();
 		user.setId(userId);
 		leave.setLeaveDate(new Date());
@@ -104,7 +107,7 @@ public class LeaveController {
 	 */
 	@ResponseBody
 	@RequestMapping("/startApply")
-	public Msg startApply(HttpServletResponse response, @RequestParam(value="id") String leaveId) throws Exception {
+	public Msg startApply(HttpServletResponse response, @RequestParam(value = "id") String leaveId) throws Exception {
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("leaveId", leaveId);
 		// 启动流程
@@ -132,17 +135,18 @@ public class LeaveController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/getLeaveByTaskId")
-	public String getLeaveByTaskId(HttpServletResponse response, @RequestParam("taskId")String taskId,Model model) throws Exception {
+	public String getLeaveByTaskId(HttpServletResponse response, @RequestParam("taskId") String taskId, Model model)
+			throws Exception {
 		// 先根据流程ID查询
 		Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
 		Leave leave = leaveService.getLeaveByTaskId(task.getProcessInstanceId());
-		
+
 		List<Comment> comments = null;
 		if (task.getProcessInstanceId() != null) {
 			comments = taskService.getProcessInstanceComments(task.getProcessInstanceId());
 			Collections.reverse(comments);
 		}
-		
+
 		model.addAttribute("taskId", taskId);
 		model.addAttribute("leave", leave);
 		model.addAttribute("comments", comments);

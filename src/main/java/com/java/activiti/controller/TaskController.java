@@ -112,16 +112,26 @@ public class TaskController {
 	 */
 	@RequestMapping(value = "/taskPage", method = RequestMethod.GET)
 	public String taskPage(HttpServletRequest request, @RequestParam(value = "pn", defaultValue = "1") Integer pn,
-			@RequestParam(value = "name", required = false) String name, Model model) throws Exception {
+			@RequestParam(value = "name", defaultValue = "") String name, Model model) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
-		long count = taskService.createTaskQuery().taskCandidateUser(userId).count();
-		List<Task> list = taskService.createTaskQuery()
-				.taskCandidateUser(userId)
-				.listPage((pn - 1) * 8, 8);
-		PageInfo<Task> pageInfo = new PageInfo<>(pn);
+		List<Task> list = null;
+		if (pn == 0) {
+			pn = 1;
+		}
+		long count = 0;
+		if ("".equals(name)) {
+			count = taskService.createTaskQuery().taskCandidateUser(userId).count();
+			list = taskService.createTaskQuery().taskCandidateUser(userId).listPage((pn - 1) * 8, 8);
+
+		} else {
+			count = taskService.createTaskQuery().taskCandidateUser(userId).taskName(name).count();
+			list = taskService.createTaskQuery().taskCandidateUser(userId).taskName(name).listPage((pn - 1) * 8, 8);
+		}
+		PageInfo<Task> pageInfo = new PageInfo<>(pn);;
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("name", name);
 		return "agencyTask";
 	}
 
@@ -180,8 +190,7 @@ public class TaskController {
 	public Msg listHistoryComment(HttpServletResponse response, @RequestParam(value = "taskId") String taskId)
 			throws Exception {
 		List<Comment> comments = null;
-		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery()
-				.taskId(taskId)
+		HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId)
 				.singleResult();
 		if (taskInstance != null) {
 			comments = taskService.getProcessInstanceComments(taskInstance.getProcessInstanceId());
@@ -276,25 +285,36 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@RequestMapping("/finishedList")
-	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn, HttpServletRequest request,
-			Model model) throws Exception {
+	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
+			@RequestParam(value = "name", defaultValue = "") String name, HttpServletRequest request, Model model)
+			throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 		String groupId = (String) request.getSession().getAttribute("groupId");
+		if (pn == 0) {
+			pn = 1;
+		}
+		long count = 0;
+		List<HistoricTaskInstance> list = null;
 
-		long count = historyService.createHistoricTaskInstanceQuery()
-				.taskCandidateUser(userId)
-				.taskCandidateGroup(groupId)
-				.count();
-		// 创建流程历史实例查询
-		List<HistoricTaskInstance> list = historyService.createHistoricTaskInstanceQuery()
-				.taskCandidateUser(userId)
-				.taskCandidateGroup(groupId)
-				.listPage((pn - 1) * 8, 8);
-
+		if ("".equals(name)) {
+			count = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId)
+					.taskCandidateGroup(groupId).count();
+			// 创建流程历史实例查询
+			list = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId)
+					.taskCandidateGroup(groupId).listPage((pn - 1) * 8, 8);
+		}else {
+			count = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId).taskName(name)
+					.taskCandidateGroup(groupId).count();
+			// 创建流程历史实例查询
+			list = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId).taskName(name)
+					.taskCandidateGroup(groupId).listPage((pn - 1) * 8, 8);
+		}
+		
 		PageInfo<HistoricTaskInstance> pageInfo = new PageInfo<>(pn);
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("name", name);
 
 		return "finishedTask";
 	}

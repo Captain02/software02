@@ -41,16 +41,32 @@ public class DeployController {
 	 * @throws Exception
 	 */
 	@RequestMapping(value="/deployPage",method=RequestMethod.GET)
-	public String deployPage(@RequestParam(value="pn",defaultValue="1")Integer pn,Model model) throws Exception{
-		long count = repositoryService.createDeploymentQuery().count();
-		List<Deployment> list=repositoryService.createDeploymentQuery()//创建流程查询实例
-				.orderByDeploymenTime().desc()  //降序
-				.listPage((pn-1)*8, 8);
+	public String deployPage(@RequestParam(value="pn",defaultValue="1")Integer pn,@RequestParam(value="name",defaultValue="")String name,Model model) throws Exception{
+		
+		long count = 0;
+		List<Deployment> list = null;
+		
+		if (pn == 0) {
+			pn = 1;
+		}
+		if ("".equals(name)) {
+			count = repositoryService.createDeploymentQuery().count();
+			list = repositoryService.createDeploymentQuery()//创建流程查询实例
+					.orderByDeploymenTime().desc()  //降序
+					.listPage((pn-1)*8, 8);
+		}else {
+			count = repositoryService.createDeploymentQuery().deploymentName(name).count();
+			list = repositoryService.createDeploymentQuery()
+					.deploymentName(name)//创建流程查询实例
+					.orderByDeploymenTime().desc()  //降序
+					.listPage((pn-1)*8, 8);
+		}
+		
 		PageInfo<Deployment> pageInfo = new PageInfo<>(pn);
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
-		model.addAttribute("pageInfo", pageInfo);
+		model.addAttribute("name", name);
 		return "deployManage";
 	}
 	/**

@@ -89,9 +89,9 @@
 	
 	    <!-- Collect the nav links, forms, and other content for toggling -->
 	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <form class="navbar-form navbar-left">
+	      <form action="${APP_PATH}/admin/leave/list" class="navbar-form navbar-left" method="post">
 	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
+	          <input type="text" value="${id}" name="id" class="form-control" placeholder="任务ID">
 	        </div>
 	        <button type="submit" class="btn btn-default">Submit</button>
 	      </form>
@@ -177,11 +177,11 @@
 					  		<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
 							  <ul class="pagination ">
 							    <li>
-	                         <a href="${APP_PATH}/admin/leave/list?pn=1">首页</a>
+	                         <a href="${APP_PATH}/admin/leave/list?pn=1&id=${id}">首页</a>
 	                     </li>
 	                     <c:if test="${pageInfo.hasPreviousPage}">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+	                             <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pageNum-1}&id=${id}" aria-label="Previous">
 	                                 <span aria-hidden="true">&laquo;</span>
 	                             </a>
 	                         </li>
@@ -195,21 +195,21 @@
 	                         </c:if>
 	                         <c:if test="${pageNum!=pageInfo.pageNum}">
 	                             <li>
-	                                 <a href="${APP_PATH}/admin/leave/list?pn=${pageNum}">${pageNum}</a>
+	                                 <a href="${APP_PATH}/admin/leave/list?pn=${pageNum}&id=${id}">${pageNum}</a>
 	                             </li>
 	                         </c:if>
 	                     </c:forEach>
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pageNum+1}" aria-label="Next">
+	                             <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pageNum+1}&id=${id}" aria-label="Next">
 	                                 <span aria-hidden="true">&raquo;</span>
 	                             </a>
 	                         </li>
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pages}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/leave/list?pn=${pageInfo.pages}&id=${id}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>
