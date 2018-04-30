@@ -104,17 +104,25 @@ function dele(ele){
 	
 	function updateGroup(){
 		var groupId = []; 
-		var joinId = '';
+		var groupsIds = '';
 		
-		$('#group-myModal input.groupid').each(function(){
-			if($(this).attr('checked')){
+		$('#group-myModal input.groupid:checked').each(function(){
 				groupId.push($(this).val());
-			}
 		})
 		
-		joinId = groupId.join('-');
+		groupsIds = groupId.join('-');
 		
-		alert(joinId);
+		/* $.ajax({
+			url:'{APP_PATH}/admin/memberShip/updateMemberShip',
+			data:{
+				'groupsIds':groupsIds,
+				'userId':userId
+			}.
+			type:"POST",
+			success:function(result){
+				console.log(result);
+			}
+		}) */
 	}
 </script>
 </head>
@@ -391,15 +399,6 @@ function dele(ele){
 						    	<input class="form-control" type="text" name="email" placeholder="输入邮箱">
 						    </div>
 					  	 </div>
-					  	 
-					  	  <!-- <div class="form-group clearfix">
-						    <label for="" class="col-md-2">组ID:</label>
-						    <div class="col-md-10">
-						    	<select class="form-control" name="group">
-						    		
-						    	</select>
-						    </div>
-					  	 </div> -->
 					  	 
 				      </div>
 				      <div class="modal-footer">

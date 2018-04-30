@@ -1,7 +1,6 @@
 package com.java.activiti.controller;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -9,13 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.java.activiti.service.MemberShipService;
 
 @Controller
-@RequestMapping("/memberShip")
+@RequestMapping("/admin/memberShip")
 public class MenberShipController {
 		@Resource
 		private MemberShipService memberShipService;
 		
 		@RequestMapping("/updateMemberShip")
-		public String updateMemberShip(HttpServletResponse response,String userId,String groupsIds) throws Exception{
+		public String updateMemberShip(String userId,String groupsIds) throws Exception{
 //			//„h³ýÈ«²¿½ÇÉ«
 //			memberShipService.deleteAllGroupsByUserId(userId);
 //			
