@@ -13,15 +13,27 @@
         http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-4.0.xsd  
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">    
         
-	
+	<context:property-placeholder location="classpath:jdbc.properties" />
 	
 	<!-- 配置数据源 -->
 	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-		<property name="url" value="jdbc:mysql://localhost:3306/db_employessleave?useUnicode=true&amp;characterEncoding=UTF-8"/>
-		<property name="username" value="root"/>
-		<property name="password" value="123456"/>
+		class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="driverClass" value="${jdbc.driverClassName}"/>
+		<property name="user" value="${jdbc.username}"/>
+		<property name="password" value="${jdbc.password}"/>
+		
+		<!-- 初始化大小、最大、最小 -->
+		<property name="initialPoolSize" value="${jdbc.pool.init}"></property>
+		<property name="minPoolSize" value="${jdbc.pool.minPoolSize}"></property>
+		<property name="maxPoolSize" value="${jdbc.pool.maxPoolSize}"></property>
+		
+		<!-- 配置获取链接等待超时时间 -->
+		<property name="checkoutTimeout" value="600000"></property>
+		<!-- 配置多久检查链接，检测需要关闭的空闲链接,单位是毫秒 -->
+		<property name="idleConnectionTestPeriod" value="60000000"></property>
+		<!-- 配置一个连接池中最小生存时间，单位是毫秒 -->
+		<property name="maxIdleTime" value="60000000"></property>
 	</bean>
 
 	<!-- 配置mybatis的sqlSessionFactory -->

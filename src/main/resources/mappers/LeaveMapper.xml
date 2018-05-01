@@ -20,7 +20,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="userId != null and userId != '' ">
 				 userId = #{userId}
 			</if>
-			<if test="id != 0 ">
+			<if test="id != null ">
 				 AND id = #{id}
 			</if>
 		</where>

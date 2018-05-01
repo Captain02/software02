@@ -16,6 +16,7 @@ import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Comment;
 import org.activiti.engine.task.Task;
+import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,7 @@ public class LeaveController {
 	 */
 	@RequestMapping("/list")
 	public String leavePage(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
-			@RequestParam(value = "id", defaultValue = "0") Integer id, Model model, HttpServletRequest request)
+			@RequestParam(value = "id", required=false) Integer id, Model model, HttpServletRequest request)
 			throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 		Map<String, Object> map = new HashMap<String, Object>();
