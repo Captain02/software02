@@ -34,7 +34,7 @@
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
 <script type="text/javascript">
-	function save(){
+	/* function save(){
 		$.ajax({
 			url:"${APP_PATH}/admin/leave/save",
 			data:$("#leaveForm").serialize(),
@@ -43,7 +43,7 @@
 				console.log(result);
 			}
 		})
-	}
+	} */
 	function redirectPage(ele) {
 		var taskId = $(ele).attr("data-taskId");
 		window.location.href='${APP_PATH}/admin/leave/getLeaveByTaskId?taskId='+taskId;

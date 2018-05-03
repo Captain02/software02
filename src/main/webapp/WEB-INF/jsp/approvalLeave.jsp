@@ -41,19 +41,19 @@
 		var isAgree = $(ele).attr("data-isAgree");
 		var taskId = $(ele).attr("data-taskId");
 		var days = $('#days').val();
-		var leaveRason = $('#leaveReason').val();
+		var comment = $('#comment').val();
 		
 		$.ajax({
 			url:"${APP_PATH}/admin/task/applyLeave",
 			data:{
 				'state':isAgree,
 				'taskId':taskId,
-				'comment':leaveRason,
+				'comment':comment,
 				'leaveDays':days
 			},
 			type:"POST",
 			success:function(result){
-				console.log(result);
+				window.location.href='${APP_PATH}/admin/task/taskPage';
 			}
 		})
 	}
@@ -152,7 +152,7 @@
 												<div class="col-md-12">
 													<label for="" class="col-md-1">批注:</label>
 													<div class="col-md-11">
-														<textarea id="leaveReason" rows="" cols="" class="form-control"></textarea>
+														<textarea id="comment" name="comment" rows="" cols="" class="form-control"></textarea>
 													</div>
 												</div>
 											</div>
