@@ -9,7 +9,15 @@
 </head>
 <body>
 <c:forEach items="${list}" var="model">
-
+<table>
+	<tr>
+		<td>${model.id}</td>
+		<td>${model.key}</td>
+		<td>${model.category}</td>
+		<td>${model.createTime}</td>
+		<td><a href="/Activiti-LFP/process-editor/modeler.html?modelId=${model.id}">编辑</a></td>
+	</tr>
+</table>
 </c:forEach>
 </body>
 </html>
