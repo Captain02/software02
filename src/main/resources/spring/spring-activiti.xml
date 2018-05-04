@@ -9,6 +9,9 @@
   
  
   
+  <!-- modeler需要自动注入ObjectMapper -->
+    <bean id="objectMapper" class="com.fasterxml.jackson.databind.ObjectMapper"/>
+  
   <!-- 定义流程引擎配置 -->
   <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
     <property name="dataSource" ref="dataSource" />
