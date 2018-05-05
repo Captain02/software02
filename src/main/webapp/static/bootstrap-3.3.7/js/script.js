@@ -131,7 +131,31 @@ function matchingGroup(result){
 	})
 }
 
+/**
+ *  滑动菜单
+ */
 
+//弹出
+function SlideDown(ele) {
+    $(ele).children('ul.list-group').slideDown('fast')
+    $(ele).addClass('open')
+}
+
+//收起
+function SlideUp(ele) {
+    $(ele).find('ul.list-group').slideUp('fast')
+    $(ele).removeClass('open')
+}
+
+$(function () {
+    $('li.item-name').click(function () {
+    	$(this).hasClass('open') ? SlideUp($(this)) : SlideDown($(this))
+    })
+    
+    $('ul.list-group li').click(function(event){
+    	event.stopPropagation()
+    })
+})
 
 
 

@@ -31,99 +31,106 @@
 
 <!-- Project core JS -->
 <script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
+<script src="${APP_PATH}/static/bootstrap-3.3.7/js/script.js"></script>
 
 </head>
 
 <body>
-	<nav class="navbar navbar-default nav-main">
-	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="#">Activiti</a>
-	    </div>
-	
-	    <!-- Collect the nav links, forms, and other content for toggling -->
-	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <form class="navbar-form navbar-left">
-	        <div class="form-group">
-	          <input type="text" class="form-control" placeholder="Search">
-	        </div>
-	        <button type="submit" class="btn btn-default">Submit</button>
-	      </form>
-	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">Link</a></li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Action</a></li>
-	            <li><a href="#">Another action</a></li>
-	            <li><a href="#">Something else here</a></li>
-	            <li role="separator" class="divider"></li>
-	            <li><a href="#">Separated link</a></li>
-	          </ul>
-	        </li>
-	      </ul>
-	    </div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
+			<div id="container">
+			
+			
+				<header class="clearfix">
+
+				<nav id="navbar" class="navbar-default nav-main navbar-inverse">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					      	<i class="glyphicon glyphicon-th-large" style="margin-right: 5px;"></i>
+					      	Activiti
+					      </a>
+					    </div>
+						<div class="navbar-content clearfix">
+						    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						      <ul class="nav navbar-nav navbar-left pull-left navbar-links">
+						      	<li class="tgl-menyu-btn">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-th-list"></i>
+						      		</a>
+						      	</li>
+						      	<li class="btn-message">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-bell"></i>
+						      		</a>
+						      	</li>
+						      	<li class="btn-task">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-tasks"></i>
+						      		</a>
+						      	</li>
+						      </ul>
+						      
+						      <ul class="nav navbar-nav navbar-right">
+						        <li><a href="#">Link</a></li>
+						        <li class="dropdown">
+						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						          <ul class="dropdown-menu">
+						            <li><a href="#">Action</a></li>
+						            <li><a href="#">Another action</a></li>
+						            <li><a href="#">Something else here</a></li>
+						            <li role="separator" class="divider"></li>
+						            <li><a href="#">Separated link</a></li>
+						          </ul>
+						        </li>
+						      </ul>
+						    
+						    </div>
+					  </div>
+				</nav>
+				
+			</header>
+
+
+
+
 	
 			<div class="wrapper">
-						<div class="row">
-						<div class="col-md-2 left-slide">
+			
+			<jsp:include page="iniLeftHref.jsp"></jsp:include>
+					
+						<div id="content-container">
+							<div class="content-title">
+								<h3 >工作台</h3>
+							</div>
+							<div class="content-body">
+								<div class="row">
+									<div class="col-lg-8">
+										<div class="panel">
+											<div class="panel-heading">
+												<h3 class="panel-title">代办列表</h3>
+											</div>
+											<div class="panel-body"></div>
+										</div>
+									</div>
+									
+									<div class="col-lg-4">
+										<div class="panel">
+											<div class="panel-heading">
+												<h3 class="panel-title">通知公告</h3>
+											</div>
+											<div class="panel-body"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						
 						
 					
-					<jsp:include page="iniLeftHref.jsp"></jsp:include>
 					
-				</div>
-					</div>
-			
-					</div>
-			
-			<!-- 查看历史批注 -->
-			<div class="modal" id="showHistoryComment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-			  <div class="modal-dialog" role="document">
-			    <div class="modal-content">
-			      <div class="modal-header">
-			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">查看历史批注</h4>
-			      </div>
-			      <div class="modal-body">
-			        <div class="panel panel-default">
-			        	<div class="panel-heading" role="tab" id="headingTwo">
-			        		<h4 class="panel-title">批注列表</h4>
-			        	</div>
-			        	
-			        	<div class="panel-body">
-			        		<table class="table table-striped table-condensed">
-							<thead>
-								<tr>
-									<th>批注时间</th>
-									<th>批注人</th>
-									<th>批注信息</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1</td>
-									<td>1</td>
-									<td>1</td>
-								</tr>
-							</tbody>
-						</table>
-					  
-			        	</div>
-						
-			        </div>
-			      </div>
-			    </div>
-			  </div>
+					
 			</div>
+			</div>
+				
+			
 			
 </body>
 </html>
