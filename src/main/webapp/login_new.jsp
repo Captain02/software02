@@ -37,19 +37,23 @@ $(function() {
 </head>
 
 <body>
-
-	<div class="container">
+	
+	<!-- background-->
+	<div id="login-bg" class="bg-img" style="background-image: url(${APP_PATH}/static/images/login_bg.png)"></div>
+	
+	<div class="container" style="padding-top: 50px;">
+		
+		<!-- 登录表单 -->
 		<form class="form-signin" action="${APP_PATH}/admin/user/userLogin">
-			<h3 class="form-signin-heading text-center">样例测试</h3>
+			<h4 class="form-signin-heading text-center">Activiti  样例测试
+				<p style="color: #afb9c3; font-size: 0.8em">使用账户名和密码进行登录</p>
+			</h4>
 			<label for="inputUserName" class="sr-only">用户名</label> 
 			<input name="userName" type="text" class="form-control" placeholder="用户名" required autofocus> 
 			<label for="inputPassword" class="sr-only">密码</label> 
 			<input name="password" type="password" id="inputPassword" class="form-control" placeholder="密码" required>
-			<select name="groupId" id="js-group" class="form-control" required>
-				
-			</select>
-			<div class="checkbox">
-			</div>
+			<select name="groupId" id="js-group" class="form-control" required></select>
+			<div class="checkbox"></div>
 			<button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
 		</form>
 
