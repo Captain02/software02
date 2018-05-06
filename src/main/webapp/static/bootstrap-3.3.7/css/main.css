@@ -7,7 +7,8 @@
 	min-width: 290px;
 	overflow: hidden;
 }
-.wrapper{
+
+.wrapper {
 	min-height: 100vh;
 }
 /* nav style 顶部导航  */
@@ -59,8 +60,7 @@
 	margin-right: 0;
 }
 
-/*left-nav 左侧导航*/
-
+/*left-nav 左侧导航 */
 #mainnav-container {
 	position: fixed;
 	z-index: 10;
@@ -92,7 +92,7 @@ li.item-name {
 	-ms-user-select: none;
 	user-select: none;
 }
-/*person-info 左侧个人信息*/
+/*person-info 左侧个人信息 */
 .person-info {
 	padding: 30px 20px 12px;
 }
@@ -178,10 +178,12 @@ ul.menulist-item>li a {
 	color: #fff;
 }
 
-#menulist li.active,
-.list-group li.active
- {
+#menulist li.active, .list-group li.active {
 	border-left: 2px solid #0c80df;
+}
+
+.list-group-item.active:hover {
+	background-color: transparent;
 }
 
 ul.menulist-item li>a {
@@ -189,10 +191,10 @@ ul.menulist-item li>a {
 	padding: 10px 20px;
 }
 
-/*content 右侧内容区域*/
+/*content 右侧内容区域 */
 #content-container {
 	position: relative;
-	min-height:100vh;
+	min-height: 100vh;
 	padding-left: 220px;
 	padding-top: 40px;
 	background-color: #ecf0f5;
@@ -213,6 +215,7 @@ ul.menulist-item li>a {
 .content-title {
 	padding: 10px 30px;
 }
-.pagination{
+
+.pagination {
 	margin: 0;
 }

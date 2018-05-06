@@ -43,16 +43,16 @@
 							
 								<div id="menulist">
 									<ul class="menulist-item">
-										<li><a href=""><i class="glyphicon glyphicon-home"></i>首页</a></li>
+										<li data-name="首页"><a href="${APP_PATH}/admin/user/main"><i class="glyphicon glyphicon-home"></i>首页</a></li>
 										<li class="item-name">
 											<a>
 												<span class="pull-right"><i class="caret"></i></span>
 												<p><i class="glyphicon glyphicon-phone-alt"></i>业务管理</p>
 											</a>
 											 <ul class="list-group">
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/leave/list"><i class="glyphicon glyphicon-calendar"></i>请假申请</a></li>
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/task/taskPage"><i class="glyphicon glyphicon-tasks"></i>代办任务管理</a></li>
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/task/finishedList"><i class="glyphicon glyphicon-folder-close"></i>已办任务管理</a></li>
+									          <li class="list-group-item" data-name="请假申请"><a href="${APP_PATH}/admin/leave/list"><i class="glyphicon glyphicon-calendar"></i>请假申请</a></li>
+									          <li class="list-group-item" data-name="代办任务管理"><a href="${APP_PATH}/admin/task/taskPage"><i class="glyphicon glyphicon-tasks"></i>代办任务管理</a></li>
+									          <li class="list-group-item" data-name="已办任务管理"><a href="${APP_PATH}/admin/task/finishedList"><i class="glyphicon glyphicon-folder-close"></i>已办任务管理</a></li>
 							        		</ul>
 										</li>
 										<li class="item-name">
@@ -61,8 +61,8 @@
 												<p><i class="glyphicon glyphicon-retweet"></i>流程管理</p>
 											</a>
 											 <ul class="list-group">
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/deploy/deployPage"><i class="glyphicon glyphicon-cloud-upload"></i>流程部署管理</a></li>
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/processDefinition/processDefinitionPage"><i class="glyphicon glyphicon-cloud-download"></i>流程定义管理</a></li>
+									          <li class="list-group-item" data-name="流程部署管理"><a href="${APP_PATH}/admin/deploy/deployPage"><i class="glyphicon glyphicon-cloud-upload"></i>流程部署管理</a></li>
+									          <li class="list-group-item" data-name="流程定义管理"><a href="${APP_PATH}/admin/processDefinition/processDefinitionPage"><i class="glyphicon glyphicon-cloud-download"></i>流程定义管理</a></li>
 							        		</ul>
 										</li>
 										<li class="item-name">
@@ -71,8 +71,8 @@
 												<p><i class="glyphicon glyphicon-user"></i>用户管理</p>
 											</a>
 											 <ul class="list-group">
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/user/userPage"><i class="glyphicon glyphicon-eye-open"></i>用户管理</a></li>
-									          <li class="list-group-item"><a href="${APP_PATH}/admin/group/groupPage"><i class="glyphicon glyphicon-heart"></i>组管理</a></li>
+									          <li class="list-group-item" data-name="用户管理"><a href="${APP_PATH}/admin/user/userPage"><i class="glyphicon glyphicon-eye-open"></i>用户管理</a></li>
+									          <li class="list-group-item" data-name="组管理"><a href="${APP_PATH}/admin/group/groupPage"><i class="glyphicon glyphicon-heart"></i>组管理</a></li>
 							        		</ul>
 										</li>
 									</ul>

@@ -1,5 +1,7 @@
 package com.java.activiti.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
+import org.apache.log4j.chainsaw.Main;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +62,12 @@ public class UserController {
 	 * @return
 	 * @throws Exception
 	 */
+	@RequestMapping(value="/main",method=RequestMethod.GET)
+	public String requestMain() {
+		
+		return "main";
+	}
+	
 	@RequestMapping("/userLogin")
 	public String userLogin(HttpServletResponse response, HttpServletRequest request, Model model) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();

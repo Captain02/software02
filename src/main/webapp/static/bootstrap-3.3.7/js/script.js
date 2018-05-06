@@ -160,9 +160,16 @@ $(function () {
 /**
  *  高亮导航
  */
+function highLightNav(ele){
+	$(ele).addClass('active');
+	$(ele).parents('li.item-name')?$(ele).parents('li.item-name').addClass('open'):false;
+}
 
 $(function () {
     var title = $('title').html();
+    $('#menulist > .menulist-item li').each(function(){
+    	$(this).attr('data-name')===title ? highLightNav($(this)) :false;
+    })
 })
 
 
