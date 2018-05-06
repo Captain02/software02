@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Dream 2018/4/10.
  */
 @Controller
-@RequestMapping("/model")
+@RequestMapping("/admin/model")
 public class ModelTest {
 
 	@RequestMapping("/create")
