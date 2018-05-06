@@ -43,7 +43,7 @@
 							
 								<div id="menulist">
 									<ul class="menulist-item">
-										<li class="active"><a href=""><i class="glyphicon glyphicon-home"></i>首页</a></li>
+										<li><a href=""><i class="glyphicon glyphicon-home"></i>首页</a></li>
 										<li class="item-name">
 											<a>
 												<span class="pull-right"><i class="caret"></i></span>

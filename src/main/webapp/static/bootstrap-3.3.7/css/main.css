@@ -7,6 +7,9 @@
 	min-width: 290px;
 	overflow: hidden;
 }
+.wrapper{
+	min-height: 100vh;
+}
 /* nav style 顶部导航  */
 #navbar {
 	position: fixed;
@@ -175,7 +178,9 @@ ul.menulist-item>li a {
 	color: #fff;
 }
 
-#menulist li.active {
+#menulist li.active,
+.list-group li.active
+ {
 	border-left: 2px solid #0c80df;
 }
 
@@ -187,6 +192,7 @@ ul.menulist-item li>a {
 /*content 右侧内容区域*/
 #content-container {
 	position: relative;
+	min-height:100vh;
 	padding-left: 220px;
 	padding-top: 40px;
 	background-color: #ecf0f5;
@@ -206,4 +212,7 @@ ul.menulist-item li>a {
 
 .content-title {
 	padding: 10px 30px;
+}
+.pagination{
+	margin: 0;
 }

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	request.setAttribute("APP_PATH", request.getContextPath());
 %>
@@ -13,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>测试</title>
+<title>首页</title>
 
 <jsp:include page="initCssHref.jsp"></jsp:include>
 

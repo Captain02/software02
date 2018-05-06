@@ -157,6 +157,13 @@ $(function () {
     })
 })
 
+/**
+ *  高亮导航
+ */
+
+$(function () {
+    var title = $('title').html();
+})
 
 
 

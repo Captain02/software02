@@ -15,24 +15,9 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>测试</title>
+<title>用户管理</title>
 
-<!-- Bootstrap core CSS -->
-<link href="${APP_PATH}/static/bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
-
-<!-- User reset CSS -->
-<link href="${APP_PATH}/static/bootstrap-3.3.7/css/reset.css" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="${APP_PATH}/static/bootstrap-3.3.7/css/main.css" rel="stylesheet">
-
-<!-- Bootstrap core JS -->
-<script src="${APP_PATH}/static/bootstrap-3.3.7/js/jquery.min.js"></script>
-<script src="${APP_PATH}/static/bootstrap-3.3.7/js/bootstrap.min.js"></script>
-<script src="${APP_PATH}/static/bootstrap-3.3.7/js/script.js"></script>
-
-<!-- Project core JS -->
-<script src="${APP_PATH}/static/bootstrap-3.3.7/js/activiti.js"></script>
+<jsp:include page="initCssHref.jsp"></jsp:include>
 
 <script type="text/javascript">
 function dele(ele){
@@ -133,55 +118,74 @@ function dele(ele){
 </head>
 
 <body>
-	<nav class="navbar navbar-default nav-main">
-	  <div class="container-fluid">
-	    <!-- Brand and toggle get grouped for better mobile display -->
-	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-	        <span class="sr-only">Toggle navigation</span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	        <span class="icon-bar"></span>
-	      </button>
-	      <a class="navbar-brand" href="#">Activiti</a>
-	    </div>
 	
-	    <!-- Collect the nav links, forms, and other content for toggling -->
-	    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-	      <form action="${APP_PATH}/admin/user/userPage" class="navbar-form navbar-left">
-	        <div class="form-group">
-	          <input type="text" name="name" value="${name}" class="form-control" placeholder="用户名">
-	        </div>
-	        <button type="submit" class="btn btn-default">Submit</button>
-	      </form>
-	      <ul class="nav navbar-nav navbar-right">
-	        <li><a href="#">Link</a></li>
-	        <li class="dropdown">
-	          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-	          <ul class="dropdown-menu">
-	            <li><a href="#">Action</a></li>
-	            <li><a href="#">Another action</a></li>
-	            <li><a href="#">Something else here</a></li>
-	            <li role="separator" class="divider"></li>
-	            <li><a href="#">Separated link</a></li>
-	          </ul>
-	        </li>
-	      </ul>
-	    </div>
-	  </div>
-	</nav>
+	
+			<div id="container">
+			
+			
+				<header class="clearfix">
+
+				<nav id="navbar" class="navbar-default nav-main navbar-inverse">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					      	<i class="glyphicon glyphicon-th-large" style="margin-right: 5px;"></i>
+					      	Activiti
+					      </a>
+					    </div>
+						<div class="navbar-content clearfix">
+						    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+						      <ul class="nav navbar-nav navbar-left pull-left navbar-links">
+						      	<li class="tgl-menyu-btn">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-th-list"></i>
+						      		</a>
+						      	</li>
+						      	<li class="btn-message">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-bell"></i>
+						      		</a>
+						      	</li>
+						      	<li class="btn-task">
+						      		<a href="">
+						      			<i class="glyphicon glyphicon-tasks"></i>
+						      		</a>
+						      	</li>
+						      </ul>
+						      
+						      <ul class="nav navbar-nav navbar-right">
+						        <li><a href="#">Link</a></li>
+						        <li class="dropdown">
+						          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+						          <ul class="dropdown-menu">
+						            <li><a href="#">Action</a></li>
+						            <li><a href="#">Another action</a></li>
+						            <li><a href="#">Something else here</a></li>
+						            <li role="separator" class="divider"></li>
+						            <li><a href="#">Separated link</a></li>
+						          </ul>
+						        </li>
+						      </ul>
+						    
+						    </div>
+					  </div>
+				</nav>
+				
+			</header>
+
+
+
+
 	
 			<div class="wrapper">
-						<div class="row">
-						<div class="col-md-2 left-slide">
-						
+			
+			<jsp:include page="iniLeftHref.jsp"></jsp:include>
 					
-					<jsp:include page="iniLeftHref.jsp"></jsp:include>
-					
-				</div>
-						<div class="col-md-10">
-							
-							<div class="panel panel-default">
+						<div id="content-container">
+							<div class="content-title">
+								<h3 >工作台</h3>
+							</div>
+							<div class="content-body">
+								<div class="panel panel-default">
 								<div class="panel-heading">
 									用户管理
 									
@@ -255,8 +259,8 @@ function dele(ele){
 								</div>
 								
 						<!-- 分页  start -->
-						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
-							  <ul class="pagination ">
+						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 0;">
+							  <ul class="pagination pagination-sm">
 							    <li>
 	                         <a href="${APP_PATH}/admin/user/userPage?pn=1&name=${name}">首页</a>
 	                     </li>
@@ -290,10 +294,16 @@ function dele(ele){
 						
 							</div>
 							
+							</div>
 						</div>
-					</div>
-			
-		    </div>
+						
+						
+					
+					
+					
+			</div>
+			</div>
+				
 			
 			<!--添加用户信息 -->
 			<div class="modal" id="add-myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
