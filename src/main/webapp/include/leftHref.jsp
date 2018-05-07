@@ -61,7 +61,7 @@
 												<p><i class="glyphicon glyphicon-retweet"></i>流程管理</p>
 											</a>
 											 <ul class="list-group">
-											 	<li class="list-group-item" data-name="流程部署管理"><a href="${APP_PATH}/admin/model/create"><i class="glyphicon glyphicon-cloud-upload"></i>模块管理</a></li>
+											  <li class="list-group-item" data-name="模型管理"><a href="${APP_PATH}/admin/model/create"><i class="glyphicon glyphicon-book"></i>模型管理</a></li>
 									          <li class="list-group-item" data-name="流程部署管理"><a href="${APP_PATH}/admin/deploy/deployPage"><i class="glyphicon glyphicon-cloud-upload"></i>流程部署管理</a></li>
 									          <li class="list-group-item" data-name="流程定义管理"><a href="${APP_PATH}/admin/processDefinition/processDefinitionPage"><i class="glyphicon glyphicon-cloud-download"></i>流程定义管理</a></li>
 							        		</ul>
