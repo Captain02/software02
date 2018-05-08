@@ -20,6 +20,7 @@ import org.apache.commons.io.filefilter.FalseFileFilter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -57,7 +58,7 @@ public class LeaveController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/list")
+	@RequestMapping(value="/list",method=RequestMethod.GET)
 	public String leavePage(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
 			@RequestParam(value = "id", required=false) Integer id, Model model, HttpServletRequest request)
 			throws Exception {
@@ -86,7 +87,7 @@ public class LeaveController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping("/save")
+	@RequestMapping(value="/save",method=RequestMethod.POST)
 	public Msg save(Leave leave, HttpServletRequest request) throws Exception {
 		String userId = (String) request.getSession().getAttribute("userId");
 
@@ -107,7 +108,7 @@ public class LeaveController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping("/startApply")
+	@RequestMapping(value="/startApply",method=RequestMethod.GET)
 	public Msg startApply(HttpServletResponse response, @RequestParam(value = "id") String leaveId) throws Exception {
 		Map<String, Object> variables = new HashMap<String, Object>();
 		variables.put("leaveId", leaveId);
@@ -135,7 +136,7 @@ public class LeaveController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/getLeaveByTaskId")
+	@RequestMapping(value="/getLeaveByTaskId",method=RequestMethod.GET)
 	public String getLeaveByTaskId(HttpServletResponse response, @RequestParam("taskId") String taskId, Model model)
 			throws Exception {
 		// 先根据流程ID查询

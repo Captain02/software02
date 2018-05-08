@@ -18,7 +18,17 @@
 <title>代办任务管理</title>
 
 <jsp:include page="initCssHref.jsp"></jsp:include>
-
+	
+	<script type="text/javascript">
+		function redirectPage(ele){
+			var id = $(ele).attr('data-taskId')
+			window.location.href='${APP_PATH}/admin/leave/getLeaveByTaskId?taskId='+id;
+		}
+		function showView(ele){
+			var id = $(ele).attr('data-taskId')
+			window.location.href='${APP_PATH}/admin/task/showCurrentView?taskId='+id;
+		}
+	</script>
 </head>
 
 <body>
@@ -164,19 +174,9 @@
 						<!-- 分页 end -->
 					
 					</div>
-					
-					
 							</div>
 						</div>
-						
-						
-					
-					
-					
 			</div>
 			</div>
-				
-			
-			
 </body>
 </html>

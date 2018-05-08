@@ -18,7 +18,12 @@
 <title>模块管理</title>
 
 <jsp:include page="initCssHref.jsp"></jsp:include>
-
+<script type="text/javascript">
+	function updateModel(ele){
+		var id = $(ele).attr('data-modelId');
+		window.location.href='${APP_PATH}/process-editor/modeler.html?modelId=' + id;
+	}
+</script>
 </head>
 
 <body>
@@ -113,30 +118,29 @@
 								</tr>
 							</thead>
 							<tbody>
-						
+							<c:forEach items="${list}" var="model">
 								<tr>
 									<td> 
 										<label>
 									      <input type="checkbox" class="selectItem">
 									    </label>
 									</td>
-									<td>Lxiya</td>
-									<td>公文管理</td>
+									<td>${model.key}</td>
+									<td>${model.name}</td>
+									<td>${model.version}</td>
 									<td>
-										5
+										<fmt:formatDate value="${model.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-										2018-02-05 15:33:15
+										<fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-										2018-02-05 15:33:15
-									</td>
-									<td>
-										<button onclick="redirectPage(this);" class="btn btn-sm btn-success" data-taskId="${task.id}">编辑</button>
-										<button onclick="showView(this);" class="btn btn-sm btn-success" data-taskId="${task.id}">部署</button>
-										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-taskId="${task.id}">删除</button>
+										<button onclick="updateModel(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">编辑</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-success" data-taskId="">部署</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-taskId="">删除</button>
 									</td>
 								</tr>
+							</c:forEach>
 							
 							</tbody>
 						</table>

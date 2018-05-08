@@ -40,7 +40,7 @@
 			data:{
 				"processInstanceId":processInstanceId
 			},
-			type:"get",
+			type:"GET",
 			success:function(result){
 				addComment(result);
 			}

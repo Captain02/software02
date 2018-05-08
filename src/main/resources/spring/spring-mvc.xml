@@ -42,4 +42,6 @@
 
 	<!-- springMVC配置，网站跳转逻辑的控制 -->
 	<context:component-scan base-package="com.java.activiti.controller" />
+	<context:component-scan base-package="org.activiti.rest.editor.main" />
+	<context:component-scan base-package="org.activiti.rest.editor.model" />
 </beans>  

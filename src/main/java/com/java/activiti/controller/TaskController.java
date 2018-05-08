@@ -84,7 +84,7 @@ public class TaskController {
 	 * @throws Exception
 	 */
 	@ResponseBody
-	@RequestMapping("/listHistoryCommentWithProcessInstanceId")
+	@RequestMapping(value = "/listHistoryCommentWithProcessInstanceId", method = RequestMethod.GET)
 	public Msg listHistoryCommentWithProcessInstanceId(HttpServletResponse response, String processInstanceId)
 			throws Exception {
 		List<Comment> commentList = null;
@@ -127,7 +127,8 @@ public class TaskController {
 			count = taskService.createTaskQuery().taskCandidateUser(userId).taskName(name).count();
 			list = taskService.createTaskQuery().taskCandidateUser(userId).taskName(name).listPage((pn - 1) * 8, 8);
 		}
-		PageInfo<Task> pageInfo = new PageInfo<>(pn);;
+		PageInfo<Task> pageInfo = new PageInfo<>(pn);
+		;
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
@@ -284,7 +285,7 @@ public class TaskController {
 	 * @return
 	 * @throws Exception
 	 */
-	@RequestMapping("/finishedList")
+	@RequestMapping(value="/finishedList",method=RequestMethod.GET)
 	public String finishedList(@RequestParam(value = "pn", defaultValue = "1") Integer pn,
 			@RequestParam(value = "name", defaultValue = "") String name, HttpServletRequest request, Model model)
 			throws Exception {
@@ -302,14 +303,14 @@ public class TaskController {
 			// 创建流程历史实例查询
 			list = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId)
 					.taskCandidateGroup(groupId).listPage((pn - 1) * 8, 8);
-		}else {
+		} else {
 			count = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId).taskName(name)
 					.taskCandidateGroup(groupId).count();
 			// 创建流程历史实例查询
 			list = historyService.createHistoricTaskInstanceQuery().taskCandidateUser(userId).taskName(name)
 					.taskCandidateGroup(groupId).listPage((pn - 1) * 8, 8);
 		}
-		
+
 		PageInfo<HistoricTaskInstance> pageInfo = new PageInfo<>(pn);
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
