@@ -48,6 +48,8 @@ function addGroup(result){
  * @yibanManage.jsp  请求ajax,生成历史批注
  */
 function addComment(result){
+	//去重	
+	$('#js-historyComment > tbody tr').remove();
 	for(var i = 0; i<result.extend.commens.length; i++){
 		var date = new Date(result.extend.commens[i].time);
 		var html = $($.parseHTML(

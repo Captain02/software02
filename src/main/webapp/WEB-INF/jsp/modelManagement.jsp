@@ -15,7 +15,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>模块管理</title>
+<title>模型管理</title>
 
 <jsp:include page="initCssHref.jsp"></jsp:include>
 <script type="text/javascript">

@@ -51,7 +51,7 @@
 											</a>
 											 <ul class="list-group">
 									          <li class="list-group-item" data-name="请假申请"><a href="${APP_PATH}/admin/leave/list"><i class="glyphicon glyphicon-calendar"></i>请假申请</a></li>
-									          <li class="list-group-item" data-name="代办任务管理"><a href="${APP_PATH}/admin/task/taskPage"><i class="glyphicon glyphicon-tasks"></i>代办任务管理</a></li>
+									          <li class="list-group-item" data-name="待办任务管理"><a href="${APP_PATH}/admin/task/taskPage"><i class="glyphicon glyphicon-tasks"></i>待办任务管理</a></li>
 									          <li class="list-group-item" data-name="已办任务管理"><a href="${APP_PATH}/admin/task/finishedList"><i class="glyphicon glyphicon-folder-close"></i>已办任务管理</a></li>
 							        		</ul>
 										</li>
