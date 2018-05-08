@@ -70,6 +70,34 @@ function addComment(result){
 		
 	}
 }
+/**
+ * @yibanManage.jsp  请求ajax,生成流程执行过程
+ */
+function addProcess(result){
+	//去重
+	$('#js-showProcess > tbody tr').remove();
+	for(var i = 0; i<result.extend.list.length;i++){
+		var dataStart = new Date(result.extend.list[i].startTime),
+			dataEnd = new Date(result.extend.list[i].endTime);
+		var html = $($.parseHTML(
+		
+				'<tr>'+
+				'<td>'+result.extend.list[i].activityId+'</td>'+
+				'<td>'+result.extend.list[i].activityName+'</td>'+
+				'<td>'+dataStart.getFullYear() + '-' + parseInt(dataStart.getMonth()+1) + '-' + dataStart.getDate() + ' ' + dataStart.getHours()+ ':' + dataStart.getMinutes()+ ':' +dataStart.getSeconds()+'</td>'+
+				'<td>'+dataEnd.getFullYear() + '-' + parseInt(dataEnd.getMonth()+1) + '-' + dataEnd.getDate() + ' ' + dataEnd.getHours()+ ':' + dataEnd.getMinutes()+ ':' +dataEnd.getSeconds()+'</td>'+
+				'</tr>'
+		
+		));
+		
+		if($('#js-showProcess')){
+			$('#js-showProcess >tbody').append(html);
+		}else{
+			return false;
+		}
+	}
+}
+
 
 /**
  * @userManage.jsp 编辑按钮填充用户信息

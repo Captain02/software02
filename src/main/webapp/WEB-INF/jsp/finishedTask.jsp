@@ -29,6 +29,7 @@
 			type:"GET",
 			success:function(result){
 				console.log(result);
+				addProcess(result);
 			}
 		})
 	}
@@ -153,7 +154,7 @@
 										<fmt:formatDate value="${historicTaskInstance.endTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
 									<td>
-											<button onclick="executionProcess(this);" class="btn btn-sm btn-info" data-taskId="${historicTaskInstance.id }" data-toggle="modal" data-target="#showHistoryComment">流程执行过程</button>
+											<button onclick="executionProcess(this);" class="btn btn-sm btn-info" data-taskId="${historicTaskInstance.id }" data-toggle="modal" data-target="#showProcess">流程执行过程</button>
 											<button onclick="listComment(this);" class="btn btn-sm btn-info" data-prcessInstanceId="${historicTaskInstance.processInstanceId }" data-toggle="modal" data-target="#showHistoryComment">历史批注</button>
 									</td>
 								</tr>
@@ -210,34 +211,35 @@
 			
 			
 			
-			<!-- 新建请假单 -->
-			<div class="modal" id="addHolidayNote" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+			<!-- 查看流程执行过程 -->
+			<div class="modal" id="showProcess" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 			  <div class="modal-dialog" role="document">
 			    <div class="modal-content">
 			      <div class="modal-header">
 			        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			        <h4 class="modal-title" id="myModalLabel">新建请假单</h4>
+			        <h4 class="modal-title" id="myModalLabel">流程执行过程</h4>
 			      </div>
-					<form id="leaveForm" action="${APP_PATH}/admin/leave/save" method="post">
+					
 			      <div class="modal-body">
-					  <div class="form-group clearfix">
-					    <label class="col-md-2" for="day">请假天数</label>
-					    <div class="col-md-10">
-					    	<input type="number" class="form-control" id="day" name="leaveDays" placeholder="请假天数">
-					    </div>
-					  </div>
-					  <div class="form-group clearfix">
-					    <label class="col-md-2" for="reason">请假原因</label>
-					    <div class="col-md-10">
-					    	<textarea class="form-control" id="reason" name="leaveReason"></textarea>
-					    </div>
-					  </div>
+			      	
+			      	<table class="table table-striped table-condensed" id="js-showProcess">
+							<thead>
+								<tr>
+									<th>节点ID</th>
+									<th>节点名称</th>
+									<th>开始时间</th>
+									<th>结束时间</th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+			      	
 			      </div>
 			      <div class="modal-footer">
-			        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">取消</button>
-			        <button type="button" onclick="save()" class="btn btn-info btn-sm">提交</button>
+			        <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">确定</button>
 			      </div>
-					</form>
 			    </div>
 			  </div>
 			</div>
