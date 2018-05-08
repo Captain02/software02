@@ -6,28 +6,29 @@ import org.activiti.editor.constants.ModelDataJsonConstants;
 import org.activiti.engine.ProcessEngine;
 import org.activiti.engine.ProcessEngines;
 import org.activiti.engine.RepositoryService;
+import org.activiti.engine.repository.Deployment;
 import org.activiti.engine.repository.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.java.activiti.model.PageInfo;
 
 @Controller
 @RequestMapping("/admin/model")
 public class ModelContorller {
-	
+
 	@Autowired
 	RepositoryService repositoryService;
-	
-	@RequestMapping("/create")
-	public String createModel() {
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public String createModel(@RequestParam("modelName") String modelName, @RequestParam("modelKey") String modelKey) {
 
 		try {
-			String modelName = "modelName";
-			String modelKey = "modelKey";
 			String description = "description";
 
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
@@ -62,12 +63,25 @@ public class ModelContorller {
 		return "";
 	}
 
-	@RequestMapping(value="/getModel",method=RequestMethod.GET)
-	public String getModel(org.springframework.ui.Model model) {
-		List<org.activiti.engine.repository.Model> list = repositoryService.createModelQuery().list();
-		model.addAttribute("list",list);
+	@RequestMapping(value = "/getModel", method = RequestMethod.GET)
+	public String getModel(org.springframework.ui.Model model,@RequestParam(value="pn",defaultValue="1")Integer pn) {
+		List<Model> list = repositoryService.createModelQuery().listPage((pn-1)*8, 8);
+		long count = repositoryService.createModelQuery().count();
+		
+		if (pn == 0) {
+			pn = 1;
+		}
+		
+		PageInfo<Model> pageInfo = new PageInfo<>(pn);
+		pageInfo.setList(list);
+		pageInfo.setTotalItemNumber(count);
+		model.addAttribute("pageInfo", pageInfo);
 		return "modelManagement";
 	}
-	
-	
+
+	@RequestMapping(value = "/save", method = RequestMethod.GET)
+	public String savePage() {
+		return "modelAdd";
+	}
+
 }

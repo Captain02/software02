@@ -23,6 +23,9 @@
 		var id = $(ele).attr('data-modelId');
 		window.location.href='${APP_PATH}/process-editor/modeler.html?modelId=' + id;
 	}
+	function save(){
+		window.location.href='${APP_PATH}/admin/model/save';
+	}
 </script>
 </head>
 
@@ -94,7 +97,7 @@
 							<div class="content-body">
 								<div class="panel panel-default">
 					  <div class="panel-heading">
-					  	<button class="btn btn-info">
+					  	<button class="btn btn-info" onclick="save()">
 					  		<i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>
 					  		添加
 					  	</button>
@@ -118,7 +121,7 @@
 								</tr>
 							</thead>
 							<tbody>
-							<c:forEach items="${list}" var="model">
+							<c:forEach items="${pageInfo.list}" var="model">
 								<tr>
 									<td> 
 										<label>
@@ -153,11 +156,11 @@
 							<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
 							  <ul class="pagination pagination-sm">
 							    <li>
-	                         <a href="${APP_PATH}/admin/task/taskPage?pn=1&name=${name}">首页</a>
+	                         <a href="${APP_PATH}/admin/model/getModel?pn=1">首页</a>
 	                     </li>
 	                     <c:if test="${pageInfo.hasPreviousPage}">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum-1}&name=${name}" aria-label="Previous">
+	                             <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.pageNum-1}" aria-label="Previous">
 	                                 <span aria-hidden="true">&laquo;</span>	
 	                             </a>
 	                         </li>
@@ -168,14 +171,14 @@
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.pageNum+1}&name=${name}" aria-label="Next">
+	                             <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.pageNum+1}" aria-label="Next">
 	                                 <span aria-hidden="true">&raquo;</span>
 	                             </a>
 	                         </li>
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/task/taskPage?pn=${pageInfo.navigatepageNums}&name=${name}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.navigatepageNums}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>
