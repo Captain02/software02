@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
@@ -15,38 +15,22 @@
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>流程定义管理</title>
+<title>模型管理</title>
 
-<jsp:include page="initCssHref.jsp"></jsp:include>
-
+<jsp:include page="../initCssHref.jsp"></jsp:include>
 <script type="text/javascript">
-function dele(ele){
-	var ids = "";
-	var pushArray = [];
-	var ifHavechecked = $('tbody tr td input[type="checkbox"]:checked');
-	if(ifHavechecked.length == 0){
-		alert('请至少选择一行');
+	function updateModel(ele){
+		var id = $(ele).attr('data-modelId');
+		window.location.href='${APP_PATH}/process-editor/modeler.html?modelId=' + id;
 	}
-	
-	else{
-		for(var i = 0; i<ifHavechecked.length; i++){
-			pushArray.push($(ifHavechecked[i]).parent().parent().next().html());
-		}
-		
-		ids = pushArray.join('-');
-        $(ele).attr('data-id',ids);
+	function save(){
+		window.location.href='${APP_PATH}/admin/model/save';
 	}
-	
-	if(confirm('确定要删除所选流程吗？')){
-		//ajax
-		alert($(ele).attr('data-id'));
-	}
-}
 </script>
 </head>
 
 <body>
-	<div id="container">
+			<div id="container">
 			
 			
 				<header class="clearfix">
@@ -104,69 +88,80 @@ function dele(ele){
 	
 			<div class="wrapper">
 			
-			<jsp:include page="iniLeftHref.jsp"></jsp:include>
+			<jsp:include page="../iniLeftHref.jsp"></jsp:include>
 					
 						<div id="content-container">
 							<div class="content-title">
-								<h3 >工作台</h3>
+								<h3 >模型管理</h3>
 							</div>
 							<div class="content-body">
 								<div class="panel panel-default">
-								<div class="panel-heading">
-									流程定义管理
-									
-								</div>
-								<div class="panel-body">
-									<table class="table table-bordered table-hover">
-									  <thead>
-									  	<tr>
-									  		<th>
-											    <label>
-											      <input type="checkbox" id="selectAll">
-											    </label>
-										    </th>
-									  		<th>编号</th>
-									  		<th>流程名称</th>
-									  		<th>流程定义的key</th>
-									  		<th>版本</th>
-									  		<th>流程定义的规则文件名称</th>
-									  		<th>流程定义的规则图片名称</th>
-									  		<th>流程部署id</th>
-									  		<th>操作</th>
-									  	</tr>
-									  </thead>
-									  <tbody>
-									  <c:forEach items="${pageInfo.list}" var="processDefnition">
-										  	<tr>
-										  		<td>
-											  		<label>
-													      <input type="checkbox" name="selectItem">
-													</label>
-												</td>
-										  		<td>${processDefnition.id}</td>
-										  		<td>${processDefnition.name}</td>
-										  		<td>${processDefnition.key}</td>
-										  		<td>${processDefnition.version}</td>
-										  		<td>${processDefnition.resourceName}</td>
-										  		<td>${processDefnition.diagramResourceName}</td>
-										  		<td>${processDefnition.deploymentId}</td>
-										  		<td><a href="${APP_PATH}/admin/processDefinition/showView?deploymentId=${processDefnition.deploymentId}&diagramResourceName=${processDefnition.diagramResourceName}" style="color: blue; text-decoration: underline; font-size: 0.8em;">查看图片</a></td>
-										  	</tr>
-									  </c:forEach>
-									  </tbody>
-									</table>
-								</div>
-								
-						<!-- 分页  start -->
-						<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
+					  <div class="panel-heading">
+					  	<button class="btn btn-info" onclick="save()">
+					  		<i class="glyphicon glyphicon-plus" style="margin-right: 5px;"></i>
+					  		添加
+					  	</button>
+					  </div>
+					  <div class="panel-body">
+					   	<table class="table table-striped">
+							<thead>
+								<tr>
+									<th> 
+										
+									    <label>
+									      <input type="checkbox" class="selectAll">
+									    </label>
+  									</th>
+									<th>模型标识</th>
+									<th>模型名称</th>
+									<th>模型版本</th>
+									<th>创建时间</th>
+									<th>最后更新日期</th>
+									<th>操作 </th>
+								</tr>
+							</thead>
+							<tbody>
+							<c:forEach items="${pageInfo.list}" var="model">
+								<tr>
+									<td> 
+										<label>
+									      <input type="checkbox" class="selectItem">
+									    </label>
+									</td>
+									<td>${model.key}</td>
+									<td>${model.name}</td>
+									<td>${model.version}</td>
+									<td>
+										<fmt:formatDate value="${model.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
+									</td>
+									<td>
+										<fmt:formatDate value="${model.lastUpdateTime}" pattern="yyyy-mm-dd hh:dd:ss" />
+									</td>
+									<td>
+										<button onclick="updateModel(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">编辑</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-success" data-taskId="">部署</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-taskId="">删除</button>
+									</td>
+								</tr>
+							</c:forEach>
+							
+							</tbody>
+						</table>
+					  
+					  
+					  
+					  </div>
+					  
+						<!-- 分页 start -->
+							<nav aria-label="Page navigation" style="position: fixed; right: 15px; bottom: 30px;">
 							  <ul class="pagination pagination-sm">
 							    <li>
-	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=1&name=${name}">首页</a>
+	                         <a href="${APP_PATH}/admin/model/getModel?pn=1">首页</a>
 	                     </li>
 	                     <c:if test="${pageInfo.hasPreviousPage}">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum-1}&name=${name}" aria-label="Previous">
-	                                 <span aria-hidden="true">&laquo;</span>
+	                             <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.pageNum-1}" aria-label="Previous">
+	                                 <span aria-hidden="true">&laquo;</span>	
 	                             </a>
 	                         </li>
 	                     </c:if>
@@ -176,23 +171,24 @@ function dele(ele){
 	
 	                     <c:if test="${pageInfo.hasNextPage }">
 	                         <li>
-	                             <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.pageNum+1}&name=${name}" aria-label="Next">
+	                             <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.pageNum+1}" aria-label="Next">
 	                                 <span aria-hidden="true">&raquo;</span>
 	                             </a>
 	                         </li>
 	                     </c:if>
 	
 	                     <li>
-	                         <a href="${APP_PATH}/admin/processDefinition/processDefinitionPage?pn=${pageInfo.navigatepageNums}&name=${name}" aria-label="Next">
+	                         <a href="${APP_PATH}/admin/model/getModel?pn=${pageInfo.navigatepageNums}" aria-label="Next">
 	                             <span aria-hidden="true">末页</span>
 	                         </a>
 	                     </li>
 							  </ul>
 							</nav>
 						<!-- 分页 end -->
-						
-							</div>
-							
+					
+					</div>
+					
+					
 							</div>
 						</div>
 						
@@ -203,6 +199,7 @@ function dele(ele){
 			</div>
 			</div>
 				
-
+			
+			
 </body>
 </html>

@@ -75,7 +75,7 @@ public class LeaveController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("id", id);
 
-		return "requestTask";
+		return "task/requestTask";
 	}
 
 	/**
@@ -152,6 +152,6 @@ public class LeaveController {
 		model.addAttribute("taskId", taskId);
 		model.addAttribute("leave", leave);
 		model.addAttribute("comments", comments);
-		return "approvalLeave";
+		return "task/approvalLeave";
 	}
 }

@@ -67,7 +67,7 @@ public class DeployController {
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("name", name);
-		return "deployManage";
+		return "deploye/deployManage";
 	}
 	/**
 	 * 添上传流程部署ZIP文件

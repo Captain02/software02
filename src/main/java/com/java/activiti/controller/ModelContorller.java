@@ -59,7 +59,7 @@ public class ModelContorller {
 			return "redirect:/process-editor/modeler.html?modelId=" + modelData.getId();
 		} catch (Exception e) {
 		}
-		return "";
+		return null;
 	}
 
 	@RequestMapping(value = "/getModel", method = RequestMethod.GET)
@@ -75,12 +75,12 @@ public class ModelContorller {
 		pageInfo.setList(list);
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
-		return "modelManagement";
+		return "model/modelManagement";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.GET)
 	public String savePage() {
-		return "modelAdd";
+		return "model/modelAdd";
 	}
 
 }
