@@ -92,14 +92,18 @@
 					  	添加新模型
 					  </div>
 					  <div class="panel-body">
-					  	<form>
+					  	<form action="${APP_PATH}/admin/model/create" method="post">
 						  <div class="form-group">
 						    <label for="modelName">模型名称</label>
-						    <input type="text" class="form-control" id="modelName" placeholder="请输入模型名称">
+						    <input type="text" class="form-control" name="modelName" placeholder="请输入模型名称">
 						  </div>
 						  <div class="form-group">
 						    <label for="modelId">模型唯一标识</label>
-						    <input type="text" class="form-control" id="modelId" placeholder="请输入模型唯一标识">
+						    <input type="text" class="form-control" name="modelKey" placeholder="请输入模型唯一标识">
+						  </div>
+						  <div class="form-group">
+						    <label for="modelId">描述</label>
+						    <input type="text" class="form-control" name="modelDescription" placeholder="请输入模型唯一标识">
 						  </div>
 						  
 						  <button type="reset" class="btn btn-default btn-warning">重置</button>

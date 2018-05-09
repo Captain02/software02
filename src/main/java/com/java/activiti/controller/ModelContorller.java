@@ -26,10 +26,9 @@ public class ModelContorller {
 	RepositoryService repositoryService;
 
 	@RequestMapping(value = "/create", method = RequestMethod.POST)
-	public String createModel(@RequestParam("modelName") String modelName, @RequestParam("modelKey") String modelKey) {
+	public String createModel(@RequestParam("modelName") String modelName, @RequestParam("modelKey") String modelKey, @RequestParam("modelDescription") String description) {
 
 		try {
-			String description = "description";
 
 			ProcessEngine processEngine = ProcessEngines.getDefaultProcessEngine();
 

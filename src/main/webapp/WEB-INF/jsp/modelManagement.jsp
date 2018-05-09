@@ -115,7 +115,6 @@
 									<th>模型标识</th>
 									<th>模型名称</th>
 									<th>模型版本</th>
-									<th>模型描述</th>
 									<th>创建时间</th>
 									<th>最后更新日期</th>
 									<th>操作 </th>
@@ -132,7 +131,6 @@
 									<td>${model.key}</td>
 									<td>${model.name}</td>
 									<td>${model.version}</td>
-									<td></td>
 									<td>
 										<fmt:formatDate value="${model.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
