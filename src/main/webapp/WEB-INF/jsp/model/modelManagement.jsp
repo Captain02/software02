@@ -26,6 +26,19 @@
 	function save(){
 		window.location.href='${APP_PATH}/admin/model/save';
 	}
+	function deploye(ele){
+		var id = $(ele).attr('data-modelId');
+		$.ajax({
+			url:'${APP_PATH}/admin/model/deployeModel',
+			data:{
+				'modelId':id
+			},
+			type:'POST',
+			success:function(result){
+				console.log(result);
+			}
+		})
+	}
 </script>
 </head>
 
@@ -139,8 +152,8 @@
 									</td>
 									<td>
 										<button onclick="updateModel(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">编辑</button>
-										<button onclick="showView(this);" class="btn btn-sm btn-success" data-taskId="">部署</button>
-										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-taskId="">删除</button>
+										<button onclick="deploye(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">部署</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-modelId="${model.id }">删除</button>
 									</td>
 								</tr>
 							</c:forEach>
