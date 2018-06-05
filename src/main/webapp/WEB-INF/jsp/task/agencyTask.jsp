@@ -17,7 +17,7 @@
 
 <title>待办任务管理</title>
 
-<jsp:include page="initCssHref.jsp"></jsp:include>
+<jsp:include page="../initCssHref.jsp"></jsp:include>
 	
 	<script type="text/javascript">
 		function redirectPage(ele){
@@ -90,7 +90,7 @@
 	
 			<div class="wrapper">
 			
-			<jsp:include page="iniLeftHref.jsp"></jsp:include>
+			<jsp:include page="../iniLeftHref.jsp"></jsp:include>
 					
 						<div id="content-container">
 							<div class="content-title">

@@ -133,7 +133,7 @@ public class TaskController {
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("name", name);
-		return "agencyTask";
+		return "task/agencyTask";
 	}
 
 	/**
@@ -173,7 +173,7 @@ public class TaskController {
 		mav.addObject("y", activityImpl.getY()); // y坐标
 		mav.addObject("width", activityImpl.getWidth()); // 宽度
 		mav.addObject("height", activityImpl.getHeight()); // 高度
-		mav.setViewName("currentView");
+		mav.setViewName("task/currentView");
 		return mav;
 	}
 
@@ -317,7 +317,7 @@ public class TaskController {
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("name", name);
 
-		return "finishedTask";
+		return "task/finishedTask";
 	}
 
 	/**
