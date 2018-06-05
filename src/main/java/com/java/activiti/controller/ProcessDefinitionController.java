@@ -57,7 +57,7 @@ public class ProcessDefinitionController {
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("name", name);
-		return "deploye/processDefinitionManage";
+		return "processDefinitionManage";
 	}
 
 	/**

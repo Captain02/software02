@@ -17,7 +17,7 @@
 
 <title>模型管理</title>
 
-<jsp:include page="../initCssHref.jsp"></jsp:include>
+<jsp:include page="initCssHref.jsp"></jsp:include>
 <script type="text/javascript">
 	function updateModel(ele){
 		var id = $(ele).attr('data-modelId');
@@ -25,19 +25,6 @@
 	}
 	function save(){
 		window.location.href='${APP_PATH}/admin/model/save';
-	}
-	function deploye(ele){
-		var id = $(ele).attr('data-modelId');
-		$.ajax({
-			url:'${APP_PATH}/admin/model/deployeModel',
-			data:{
-				'modelId':id
-			},
-			type:'POST',
-			success:function(result){
-				console.log(result);
-			}
-		})
 	}
 </script>
 </head>
@@ -101,7 +88,7 @@
 	
 			<div class="wrapper">
 			
-			<jsp:include page="../iniLeftHref.jsp"></jsp:include>
+			<jsp:include page="iniLeftHref.jsp"></jsp:include>
 					
 						<div id="content-container">
 							<div class="content-title">
@@ -128,6 +115,7 @@
 									<th>模型标识</th>
 									<th>模型名称</th>
 									<th>模型版本</th>
+									<th>模型描述</th>
 									<th>创建时间</th>
 									<th>最后更新日期</th>
 									<th>操作 </th>
@@ -144,6 +132,7 @@
 									<td>${model.key}</td>
 									<td>${model.name}</td>
 									<td>${model.version}</td>
+									<td></td>
 									<td>
 										<fmt:formatDate value="${model.createTime}" pattern="yyyy-mm-dd hh:dd:ss" />
 									</td>
@@ -152,8 +141,8 @@
 									</td>
 									<td>
 										<button onclick="updateModel(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">编辑</button>
-										<button onclick="deploye(this);" class="btn btn-sm btn-success" data-modelId="${model.id }">部署</button>
-										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-modelId="${model.id }">删除</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-success" data-taskId="">部署</button>
+										<button onclick="showView(this);" class="btn btn-sm btn-danger" data-taskId="">删除</button>
 									</td>
 								</tr>
 							</c:forEach>

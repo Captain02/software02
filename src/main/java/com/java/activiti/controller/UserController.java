@@ -124,7 +124,7 @@ public class UserController {
 		model.addAttribute("name", name);
 		model.addAttribute("pageInfo", pageInfo);
 
-		return "user/userManage";
+		return "userManage";
 	}
 
 	/**

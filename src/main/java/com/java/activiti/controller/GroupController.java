@@ -74,7 +74,7 @@ public class GroupController {
 		pageInfo.setTotalItemNumber(count);
 		model.addAttribute("pageInfo", pageInfo);
 		model.addAttribute("name", name);
-		return "group/groupManage";
+		return "groupManage";
 	}
 
 	/**
